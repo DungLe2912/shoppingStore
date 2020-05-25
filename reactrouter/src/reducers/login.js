@@ -24,7 +24,7 @@ const Login = (state = initialState, action) => {
             index=findIndex(action.account.username,action.account.password,state);
          //   console.log(index);
             if(index!==-1){
-                localStorage.setItem('USER', JSON.stringify(action.account));
+                localStorage.setItem('USER', JSON.stringify({"isLogin":true}));
             }
             return [...state];
         case types.LOGOUT:
