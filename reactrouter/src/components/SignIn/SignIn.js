@@ -1,9 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
-SignIn.propTypes = {
 
-};
+import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 
 function SignIn(props) {
     return (

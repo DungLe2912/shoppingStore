@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import callAPI from '../../utils/APICaller';
 import { Link,Redirect } from 'react-router-dom';
 import * as actions from '../../actions/index';
-import products from '../../reducers/products';
 import { connect } from 'react-redux';
 class ProductActionPage extends Component {
     constructor(props, context) {

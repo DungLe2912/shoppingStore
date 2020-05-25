@@ -1,5 +1,4 @@
 import * as types from '../constants/ActionTypes';
-import products from '../reducers/products';
 import callAPI from '../utils/APICaller';
 
 export const openModal=(product)=>{
@@ -188,5 +187,10 @@ export const Login = (account)=>{
     return {
         type:types.LOGIN,
         account
+    }
+}
+export const Logout = ()=>{
+    return {
+        type:types.LOGOUT,
     }
 }

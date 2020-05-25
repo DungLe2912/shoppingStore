@@ -5,7 +5,7 @@ import ProductListPage from './pages/ProductListPage/ProductListPage';
 import ProductActionPage from './pages/ProductActionPage/ProductActionPage';
 import ProductCartPage from './pages/ProductCart/ProductCartPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-
+import LogoutPage from './pages/Logout/LogoutPage';
     const routes = [
     {
         path : '/',
@@ -36,6 +36,11 @@ import LoginPage from './pages/LoginPage/LoginPage';
         path : '/login',
         exact : false,
         main:()=> <LoginPage/>
+    },
+    {
+        path : '/logout',
+        exact : false,
+        main:({history})=> <LogoutPage history={history}/>
     },
     {
         path : '',

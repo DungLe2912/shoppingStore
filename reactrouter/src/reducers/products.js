@@ -1,4 +1,3 @@
-import callAPI from '../utils/APICaller';
 import * as types from '../constants/ActionTypes';
 
 let initialState = [];
