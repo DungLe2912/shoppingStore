@@ -1,5 +1,4 @@
 import * as types from '../constants/ActionTypes';
-import CartResult from '../components/Cart/CartResult';
 var data = JSON.parse(localStorage.getItem('CART'));
 var initialState = data ? data : [];
 
@@ -67,6 +66,7 @@ const CartProduct = (state = initialState, action) => {
                 state.splice(index,1);
                 localStorage.setItem('CART', JSON.stringify(state));
             }
+        // eslint-disable-next-line no-fallthrough
         default:
             return [...state];
     }

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import NotifiModal from './NotifiModal';
 class Login extends Component {
@@ -49,7 +50,7 @@ class Login extends Component {
                                         <input type="password" name="txtPassword"  className="form-control" value={txtPassword}  placeholder="Enter Password" onChange={this.onChange}/>
                                     </div>
                                     <div className="form-group">
-                                        <p className="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
+                                        <p className="text-center">By signing up you accept our <a>Terms Of Use</a></p>
                                     </div>
                                     <div className="col-md-12 text-center ">
                                         <button type="submit" className=" btn btn-block mybtn btn-primary tx-tfm">Login</button>

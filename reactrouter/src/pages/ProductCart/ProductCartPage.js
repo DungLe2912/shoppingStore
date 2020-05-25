@@ -3,7 +3,6 @@ import Cart from '../../components/Cart/Cart'
 import CartItems from '../../components/Cart/CartItems'
 import * as actions from '../../actions/index';
 import { connect } from 'react-redux';
-import products from '../../reducers/products';
 import {Redirect} from 'react-router-dom';
 class ProductCartPage extends Component {
     constructor(props, context) {
@@ -59,7 +58,7 @@ class ProductCartPage extends Component {
      //   console.log(data);
     }
     render() {
-        let {products,quantity} = this.props;
+        let {products} = this.props;
         let user = JSON.parse(localStorage.getItem('USER'));
         //  console.log(productOnModal);
         if(user===null){

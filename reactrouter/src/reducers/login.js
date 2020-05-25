@@ -27,6 +27,10 @@ const Login = (state = initialState, action) => {
                 localStorage.setItem('USER', JSON.stringify(action.account));
             }
             return [...state];
+        case types.LOGOUT:
+            localStorage.removeItem('USER');
+            console.log('deleteitem');
+            return [...state];
         default:
             return state;
     }

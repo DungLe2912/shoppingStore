@@ -1,11 +1,10 @@
-import React, { Component, Profiler } from 'react';
+import React, { Component } from 'react';
 import ProductList from '../../components/ProductList/ProductList';
 import ProductItem from '../../components/ProductItem/ProductItem';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import * as actions from '../../actions/index';
 import Modal from '../../components/Modal/Modal';
-import products from '../../reducers/products';
 class ProductListPage extends Component {
 
     componentDidMount() {
@@ -33,7 +32,7 @@ class ProductListPage extends Component {
         this.props.changeStatus(product);
     }
     render() {
-        const { products, productOnModal } = this.props;
+        const { products } = this.props;
         let user = JSON.parse(localStorage.getItem('USER'));
         //  console.log(productOnModal);
         if(user===null){
