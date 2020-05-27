@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-//var Modal = require('react-bootstrap-modal');
+
 class NotifiModal extends Component {
     constructor(props, context) {
         super(props, context);
@@ -47,7 +47,7 @@ class NotifiModal extends Component {
                         <h3 style={{ textAlign: "center" }}>{errorMessage}</h3>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button className="btn btn-primary" onClick={()=>this.close()}><span className="fa fa-sign-in"></span>&nbsp;Đăng nhập </Button>
+                        <Button className="btn btn-primary" onClick={()=>this.close()}><span className="fa fa-sign-in"></span>&nbsp;Quay lai </Button>
                         <Link to={'/'} className="btn btn-success"><span className="fa fa-home"></span>&nbsp;Tới trang chủ</Link>
                     </Modal.Footer>
                 </Modal>
@@ -55,5 +55,6 @@ class NotifiModal extends Component {
         );
     }
 }
+
 
 export default NotifiModal;
