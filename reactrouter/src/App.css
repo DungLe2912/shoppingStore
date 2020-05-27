@@ -36,25 +36,25 @@
     transform: rotate(360deg);
   }
 }
-.mb-10{
+.mb-10 {
   margin-bottom: 10px;
 }
-.mr-10{
+.mr-10 {
   margin-right: 10px;
 }
-.ml-10{
+.ml-10 {
   margin-left: 10px;
 }
-.mr-5{
+.mr-5 {
   margin-right: 5px;
 }
 .modal {
   text-align: center;
-  padding: 0!important;
+  padding: 0 !important;
 }
 
 .modal:before {
-  content: '';
+  content: "";
   display: inline-block;
   height: 100%;
   vertical-align: middle;
@@ -74,92 +74,100 @@
   display: none;
 } */
 
-.modal-flex{
-  display:flex;
+.modal-flex {
+  display: flex;
   justify-content: space-around;
 }
-.lable-flex{
+.lable-flex {
   display: flex;
-  justify-content: flex-end;  
- 
+  justify-content: flex-end;
 }
-.button-flex{
+.button-flex {
   vertical-align: center;
 }
 .modal-backdrop {
-  background-color:rgba(0, 0, 0, 0.6);
-} 
-.custom-dialog {width:38% !important; top:-25%;}
-.hover:hover{
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.custom-dialog {
+  width: 38% !important;
+  top: -25%;
+}
+.hover:hover {
   cursor: pointer;
-  color:red;
+  color: red;
 }
 
 /**/
-  a{
-   text-decoration:none !important;
-   }
-   h1,h2,h3{
-   font-family: 'Kaushan Script', cursive;
-   }
-    .myform{
-position: relative;
-display: -ms-flexbox;
-display: flex;
-padding: 1rem;
--ms-flex-direction: column;
-flex-direction: column;
-width: 100%;
-pointer-events: auto;
-background-color: #fff;
-background-clip: padding-box;
-border: 1px solid rgba(0,0,0,.2);
-border-radius: 1.1rem;
-outline: 0;
-max-width: 500px;
+a {
+  text-decoration: none !important;
 }
-   .tx-tfm{
-   text-transform:uppercase;
-   }
-   .mybtn{
-   border-radius:50px;
-   }
-  
-   .login-or {
-   position: relative;
-   color: #aaa;
-   margin-top: 10px;
-   margin-bottom: 10px;
-   padding-top: 10px;
-   padding-bottom: 10px;
-   }
-   .span-or {
-   display: block;
-   position: absolute;
-   left: 50%;
-   top: -2px;
-   margin-left: -25px;
-   background-color: #fff;
-   width: 50px;
-   text-align: center;
-   }
-   .hr-or {
-   height: 1px;
-   margin-top: 0px !important;
-   margin-bottom: 0px !important;
-   }
-   .google {
-   color:#666;
-   width:100%;
-   height:40px;
-   text-align:center;
-   outline:none;
-   border: 1px solid lightgrey;
-   }
-    form .error {
-   color: #ff0000;
-   }
-   .login-flex{
-     display:flex;
-     justify-content: center;
-   }
+h1,
+h2,
+h3 {
+  font-family: "Kaushan Script", cursive;
+}
+.myform {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 1.1rem;
+  outline: 0;
+  max-width: 500px;
+}
+.tx-tfm {
+  text-transform: uppercase;
+}
+.mybtn {
+  border-radius: 50px;
+}
+
+.login-or {
+  position: relative;
+  color: #aaa;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.span-or {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  margin-left: -25px;
+  background-color: #fff;
+  width: 50px;
+  text-align: center;
+}
+.hr-or {
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.google {
+  color: #666;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  outline: none;
+  border: 1px solid lightgrey;
+}
+form .error {
+  color: #ff0000;
+}
+.login-flex {
+  display: flex;
+  justify-content: center;
+}
+.mybtngg{
+  background-color: red;
+  border-radius: 50px;
+}

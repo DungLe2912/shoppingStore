@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
-import NotifiModal from './NotifiModal';
 import { Link } from 'react-router-dom';
-class Login extends Component {
+import NotifiModal from './NotifiModal';
+class SignUp extends Component {
     constructor(props, context) {
         super(props, context);
         this.state={
             txtUsername:"",
-            txtPassword:""
+            txtPassword:"",
+            txtRePassword:""
         }
     }
     onChange = (e) => {
@@ -18,24 +19,25 @@ class Login extends Component {
             [name]: value
         });
     }
+    onClose=()=>{
+        this.props.onClose();
+    }
     onSave = (e) => {
         e.preventDefault();
         const username = this.state.txtUsername;
         const password = this.state.txtPassword;
-        const account = {username,password};
-        this.onLogin(account);
+        const repassword = this.state.txtRePassword;
+        const account = {username,password,repassword};
+        this.onSignup(account);
     }
-    onLogin=(account)=>{
-        this.props.onLogin(account);
+    onSignup=(account)=>{
+        this.props.onSignup(account);
     }
     onSignInUsingGoogle=()=>{
         this.props.onSignInUsingGoogle();
     }
-    onClose=()=>{
-        this.props.onClose();
-    }
     render() {
-        const {txtUsername,txtPassword} = this.state;
+        const {txtUsername,txtPassword,txtRePassword} = this.state;
         return (
             <div className="container ">
                 <div className="row">
@@ -44,7 +46,7 @@ class Login extends Component {
                             <div className="myform form ">
                                 <div className="logo mb-3">
                                     <div className="col-md-12 text-center">
-                                        <h1>Login</h1>
+                                        <h1>Sign up</h1>
                                     </div>
                                 </div>
                                 <form onSubmit={this.onSave}>
@@ -53,14 +55,18 @@ class Login extends Component {
                                         <input type="email" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter email" onChange={this.onChange}/>
                                     </div>
                                     <div className="form-group">
-                                        <label>Password</label>
+                                        <label>Password:</label>
                                         <input type="password" name="txtPassword"  className="form-control" value={txtPassword}  placeholder="Enter Password" onChange={this.onChange}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Re-password:</label>
+                                        <input type="password" name="txtRePassword"  className="form-control" value={txtRePassword}  placeholder="Enter Re-Password" onChange={this.onChange}/>
                                     </div>
                                     <div className="form-group">
                                         <p className="text-center">By signing up you accept our <a>Terms Of Use</a></p>
                                     </div>
                                     <div className="col-md-12 text-center ">
-                                        <button type="submit" className=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                                        <button type="submit" className=" btn btn-block mybtn btn-primary tx-tfm">Sign up</button>
                                     </div>
                                     <div className="col-md-12 ">
                                         <div className="login-or">
@@ -76,7 +82,7 @@ class Login extends Component {
                                         </p>
                                     </div>
                                     <div className="form-group">
-                                        <p className="text-center">Don't have account? <Link to={'/sign-up'} id="signup">Sign up here</Link></p>
+                                        <p className="text-center">You have account? <Link to={'/login'} id="signup">Sign-in here</Link></p>
                                     </div>
                                 </form>
 
@@ -84,15 +90,15 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-                <NotifiModal 
-                isOpen={this.props.isOpen} 
-                errorMessage = {this.props.errorMessage}
-                onClose={this.onClose}
-                />
+               <NotifiModal 
+               isOpen={this.props.isError}
+               errorMessage = {this.props.errorMessage}
+               onClose={this.onClose}
+               />
             </div>
            
         );
     }
 }
 
-export default Login;
+export default SignUp;

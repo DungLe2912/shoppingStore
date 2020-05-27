@@ -6,6 +6,8 @@ import ProductActionPage from './pages/ProductActionPage/ProductActionPage';
 import ProductCartPage from './pages/ProductCart/ProductCartPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import LogoutPage from './pages/Logout/LogoutPage';
+import SignupPage from './pages/SignupPage/SignupPage';
+
     const routes = [
     {
         path : '/',
@@ -41,6 +43,11 @@ import LogoutPage from './pages/Logout/LogoutPage';
         path : '/logout',
         exact : false,
         main:({history})=> <LogoutPage history={history}/>
+    },
+    {
+        path : '/sign-up',
+        exact : false,
+        main:({history})=> <SignupPage history={history}/>
     },
     {
         path : '',

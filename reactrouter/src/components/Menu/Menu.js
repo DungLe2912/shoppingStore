@@ -61,7 +61,7 @@ class Menu extends Component {
        if(nextProps){
            this.setState({
                isUpdated:nextProps.isUpdated,
-           },()=>console.log(this.state.isUpdated))
+           })
        }
    }
    onLogout=()=>{
