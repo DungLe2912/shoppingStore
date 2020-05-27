@@ -82,12 +82,14 @@ class Menu extends Component {
     }
     showMenu=(menus)=>{
         let result =null;   
+        let user = JSON.parse(localStorage.getItem('USER'));
+
         if(menus.length >0){
             result = menus.map((menu,index)=>{
                 return (
                     <MenuLink
                     key={index}
-                    label={(this.state.isUpdated===true&&menu.name==='Đăng nhập')?'Đăng xuất':menu.name}
+                    label={(this.state.isUpdated===true&&menu.name==='Đăng nhập'&&user!==null)?'Xin chào '+user.username+' (Đăng xuất)':menu.name}
                     to={(this.state.isUpdated===true&&menu.name==='Đăng nhập')?'/logout':menu.to}
                     activeOnlyWhenExact={menu.exact}
                     

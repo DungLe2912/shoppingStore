@@ -13,7 +13,8 @@ class CartResult extends Component {
     }
     showTotal=(products)=>{
         let result=0;
-        products.map((product,index)=>{
+        // eslint-disable-next-line array-callback-return
+        products.map((product,index) => {
             result+=(product.price*product.quantity);
         })
         return result; 
