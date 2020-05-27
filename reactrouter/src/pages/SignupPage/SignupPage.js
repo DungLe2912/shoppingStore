@@ -53,11 +53,19 @@ class SignoutPage extends Component {
                 
               });
             if(this.state.isError===false){
-                this.setState({
-                    isSignup:true,
-                },()=>{
-                    console.log(this.state.isSignup);
-                })
+                const user = firebase.auth().currentUser;
+               await user.updateProfile({
+                    displayName: account.name,
+                  }).then(()=> {
+                    this.setState({
+                        isSignup:true,
+                    },()=>{
+                        console.log(this.state.isSignup);
+                    })
+                  }).catch(function(error) {
+                    console.log(error);
+                  });
+               
             }
         }
        

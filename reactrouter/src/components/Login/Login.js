@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
-import NotifiModal from './NotifiModal';
+import NotifiModal from '../NotifiModal/NotifiModal';
 import { Link } from 'react-router-dom';
 class Login extends Component {
     constructor(props, context) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CartResult from './CartResult';
-import Notification from './Notification';
+import NotifiModal from './Notification';
 
 class Cart extends Component {
     constructor(props, context) {
@@ -53,7 +53,7 @@ class Cart extends Component {
                     
                 </div>
                 <CartResult productsTotal={productsTotal}/>
-                <Notification productsTotal={productsOnCartPrev} openModal={this.state.openModal} />
+                <NotifiModal productsTotal={productsOnCartPrev} openModal={this.state.openModal} />
                 <button type="button" className="btn btn-lg btn-primary " onClick={this.onOpenModal}>Thanh toán</button>
             </div>
         );

@@ -1,14 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import NotifiModal from './NotifiModal';
+import NotifiModal from '../NotifiModal/NotifiModal';
 class SignUp extends Component {
     constructor(props, context) {
         super(props, context);
-        this.state={
-            txtUsername:"",
-            txtPassword:"",
-            txtRePassword:""
+        this.state = {
+            txtName: "",
+            txtUsername: "",
+            txtPassword: "",
+            txtRePassword: "",
         }
     }
     onChange = (e) => {
@@ -19,25 +20,26 @@ class SignUp extends Component {
             [name]: value
         });
     }
-    onClose=()=>{
+    onClose = () => {
         this.props.onClose();
     }
     onSave = (e) => {
         e.preventDefault();
+        const name = this.state.txtName;
         const username = this.state.txtUsername;
         const password = this.state.txtPassword;
         const repassword = this.state.txtRePassword;
-        const account = {username,password,repassword};
+        const account = {name, username, password, repassword };
         this.onSignup(account);
     }
-    onSignup=(account)=>{
+    onSignup = (account) => {
         this.props.onSignup(account);
     }
-    onSignInUsingGoogle=()=>{
+    onSignInUsingGoogle = () => {
         this.props.onSignInUsingGoogle();
     }
     render() {
-        const {txtUsername,txtPassword,txtRePassword} = this.state;
+        const { txtUsername, txtPassword, txtRePassword, txtName} = this.state;
         return (
             <div className="container ">
                 <div className="row">
@@ -51,16 +53,20 @@ class SignUp extends Component {
                                 </div>
                                 <form onSubmit={this.onSave}>
                                     <div className="form-group">
+                                        <label>Name:</label>
+                                        <input type="text" name="txtName" className="form-control" value={txtName} placeholder="Enter your name" onChange={this.onChange} />
+                                    </div>
+                                    <div className="form-group">
                                         <label>Email:</label>
-                                        <input type="email" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter email" onChange={this.onChange}/>
+                                        <input type="email" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter email" onChange={this.onChange} />
                                     </div>
                                     <div className="form-group">
                                         <label>Password:</label>
-                                        <input type="password" name="txtPassword"  className="form-control" value={txtPassword}  placeholder="Enter Password" onChange={this.onChange}/>
+                                        <input type="password" name="txtPassword" className="form-control" value={txtPassword} placeholder="Enter Password" onChange={this.onChange} />
                                     </div>
                                     <div className="form-group">
                                         <label>Re-password:</label>
-                                        <input type="password" name="txtRePassword"  className="form-control" value={txtRePassword}  placeholder="Enter Re-Password" onChange={this.onChange}/>
+                                        <input type="password" name="txtRePassword" className="form-control" value={txtRePassword} placeholder="Enter Re-Password" onChange={this.onChange} />
                                     </div>
                                     <div className="form-group">
                                         <p className="text-center">By signing up you accept our <a>Terms Of Use</a></p>
@@ -75,8 +81,8 @@ class SignUp extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-12 mb-3 ">
-                                        <p className="text-center" onClick={()=>this.onSignInUsingGoogle()}>
-                                            <a  className="google btn mybtngg"><i className="fa fa-google-plus">
+                                        <p className="text-center" onClick={() => this.onSignInUsingGoogle()}>
+                                            <a className="google btn mybtngg"><i className="fa fa-google-plus">
                                             </i> Sign-in using Google
                                      </a>
                                         </p>
@@ -90,13 +96,13 @@ class SignUp extends Component {
                         </div>
                     </div>
                 </div>
-               <NotifiModal 
-               isOpen={this.props.isError}
-               errorMessage = {this.props.errorMessage}
-               onClose={this.onClose}
-               />
+                <NotifiModal
+                    isOpen={this.props.isError}
+                    errorMessage={this.props.errorMessage}
+                    onClose={this.onClose}
+                />
             </div>
-           
+
         );
     }
 }
