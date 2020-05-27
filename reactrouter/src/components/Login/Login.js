@@ -33,6 +33,10 @@ class Login extends Component {
     }
     onClose=()=>{
         this.props.onClose();
+        this.setState({
+            txtUsername:"",
+            txtPassword:""
+        })
     }
     render() {
         const {txtUsername,txtPassword} = this.state;

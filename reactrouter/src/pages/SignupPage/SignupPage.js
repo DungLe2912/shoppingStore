@@ -6,6 +6,8 @@ import * as actions from '../../actions/index';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
+import * as errorMessages from '../../constants/ErrorMessageHandle';
+import * as typeErrors from '../../constants/ErrorType';
 let firebaseApp = firebase;
 //const firebaseApp = firebase.initializeApp(firebaseConfig);
 if (!firebase.apps.length) {
@@ -39,13 +41,26 @@ class SignoutPage extends Component {
         if(account.password !== account.repassword){
             this.setState({
                 isError:true,
-                errorMessage:"Password and Re-Password are not same",
+                errorMessage: errorMessages.REPASSWORD_NOT_SAME,
             })
         }
         else{
             await firebaseApp.auth().createUserWithEmailAndPassword(account.username, account.password).catch(error=> {
-                var errorMessage = error.message;
-                console.log( errorMessage);
+                let errorMessage = error.message;
+                 const errorCode = error.code;
+                switch (errorCode) {
+               case typeErrors.WEAK_PASSWORD:
+                   errorMessage = errorMessages.WEAK_PASSWORD;
+                   break;
+                case typeErrors.EMAIL_ALREADY_IN_USE:
+                    errorMessage = errorMessages.EMAIL_ALREADY_IN_USE;
+                    break;
+                case typeErrors.NETWORK_REQUEST_FAILED:
+                    errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
+                    break;
+               default:
+                   break;
+           }
                 this.setState({
                     isError:true,
                     errorMessage:errorMessage,
@@ -74,6 +89,7 @@ class SignoutPage extends Component {
         console.log('sign in using gg');
         await firebase.auth().signInWithPopup(provider).catch(error=> {
              const errorMessage = error.message;
+             console.log(error.code)
              this.setState({
                  isError: true,
                  errorMessage: errorMessage,

@@ -3,7 +3,8 @@ import Login from '../../components/Login/Login';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../actions/index';
-
+import * as errorMessages from '../../constants/ErrorMessageHandle';
+import * as typeErrors from '../../constants/ErrorType';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
@@ -61,8 +62,25 @@ class LoginPage extends Component {
         // }
         await firebaseApp.auth().signInWithEmailAndPassword(account.username, account.password).catch(error => {
             // Handle Errors here.
-            var errorMessage = error.message;
-            console.log(errorMessage);
+            let errorMessage = error.message;
+            const errorCode = error.code;
+           switch (errorCode) {
+               case typeErrors.USER_DISABLE:
+                   errorMessage = errorMessages.USER_DISABLE;
+                   break;
+                case typeErrors.USER_NOT_FOUND:
+                    errorMessage = errorMessages.USER_NOT_FOUND;
+                    break;
+                case typeErrors.NETWORK_REQUEST_FAILED:
+                    errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
+                    break;
+                case typeErrors.WRONG_PASSWORD:
+                    errorMessage = errorMessages.WRONG_PASSWORD;
+                    break;
+               default:
+                   break;
+           }
+            console.log(error.code);
             this.setState({
                 isOpen: true,
                 errorMessage: errorMessage,
