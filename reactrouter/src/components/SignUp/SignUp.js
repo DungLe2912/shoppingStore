@@ -22,6 +22,12 @@ class SignUp extends Component {
     }
     onClose = () => {
         this.props.onClose();
+        this.setState({
+            txtName: "",
+            txtUsername: "",
+            txtPassword: "",
+            txtRePassword: "",
+        })
     }
     onSave = (e) => {
         e.preventDefault();
