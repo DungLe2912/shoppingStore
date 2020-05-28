@@ -7,14 +7,22 @@ class NotifiModal extends Component {
         super(props, context);
         this.state = {
             showModal: false,
+           
         }
     }
+    // componentDidUpdate(){
+    //     this.setState({
+    //         isRendering:false,
+    //     })
+    //    // console.log('componentwillupdate run');
+    // }
     componentWillReceiveProps(nextProps) {
 
         if (nextProps && nextProps.isOpen) {
-            //  console.log("componentWillReceiveProps");
+              console.log("componentWillReceiveProps");
             this.setState({
                 showModal: nextProps.isOpen,
+               
             })
         }
     }
@@ -26,13 +34,36 @@ class NotifiModal extends Component {
         );
         this.props.onClose();
     }
+    // shouldComponentUpdate(nextProps,nextState){
+    //     // eslint-disable-next-line no-useless-concat
+    //     console.log('errMessage: '+nextProps.errorMessage +' - '+'showModal: '+nextState.showModal +' - '+'re-renderOpen: '+nextState.isreRenderOpen+' - '+'re-renderClose: '+nextState.isreRenderClose)
+    //     // if(nextProps.errorMessage===""||nextState.showModal===false){
+    //     //     console.log('update failed');
+    //     //     return false;
+    //     // }
+    //     if(nextProps.errorMessage!==""&&nextState.showModal===true&&nextState.isreRenderOpen===true)
+    //     {
+    //         console.log('re-render open');
+    //         return true;
+    //     }
+    //     if(nextProps.errorMessage===""&&nextState.showModal===false&&nextState.isreRenderClose===true&&nextState.isreRenderOpen===false){
+    //         console.log('re-render close');
+    //         return true;
+    //     }
+       
+       
+       
 
+    //     return false;
+    // }
+    
     // open = () => {
     //     console.log("runOpen");
     //     this.setState({ showModal: true });
     // }
     render() {
         const { errorMessage } = this.props;
+        console.log(this.state.showModal);
         //  console.log(productsTotal.length);
         return (
             <div>

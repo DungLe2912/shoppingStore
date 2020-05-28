@@ -8,6 +8,7 @@ import 'firebase/auth';
 import firebaseConfig from '../../firebase';
 import * as errorMessages from '../../constants/ErrorMessageHandle';
 import * as typeErrors from '../../constants/ErrorType';
+import NotifiModal from '../../components/NotifiModal/NotifiModal';
 let firebaseApp = firebase;
 //const firebaseApp = firebase.initializeApp(firebaseConfig);
 if (!firebase.apps.length) {
@@ -57,6 +58,9 @@ class SignoutPage extends Component {
                     break;
                 case typeErrors.NETWORK_REQUEST_FAILED:
                     errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
+                    break;
+                case typeErrors.INVALID_EMAIL:
+                    errorMessage = errorMessages.INVALID_EMAIL;
                     break;
                default:
                    break;
@@ -123,14 +127,19 @@ class SignoutPage extends Component {
             )
         }
         return (
-            <div>
+            <React.Fragment>
                 <SignUp onSignup={this.onSignup}
                  errorMessage={this.state.errorMessage}
                  isError={this.state.isError}
                  onSignInUsingGoogle={this.onSignInUsingGoogle}
-                 onClose={this.onClose}
+                
                  />
-            </div>
+                 <NotifiModal
+                    isOpen={this.state.isError}
+                    errorMessage={this.state.errorMessage}
+                    onClose={this.onClose}
+                />
+            </React.Fragment>
         );
     }
 }

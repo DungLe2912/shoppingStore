@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 class Login extends Component {
     constructor(props, context) {
         super(props, context);
-        this.state={
-            txtUsername:"",
-            txtPassword:""
+        this.state = {
+            txtUsername: "",
+            txtPassword: ""
         }
     }
     onChange = (e) => {
@@ -22,24 +22,27 @@ class Login extends Component {
         e.preventDefault();
         const username = this.state.txtUsername;
         const password = this.state.txtPassword;
-        const account = {username,password};
+        const account = { username, password };
         this.onLogin(account);
     }
-    onLogin=(account)=>{
+    onLogin = (account) => {
         this.props.onLogin(account);
     }
-    onSignInUsingGoogle=()=>{
+    onSignInUsingGoogle = () => {
         this.props.onSignInUsingGoogle();
     }
-    onClose=()=>{
-        this.props.onClose();
-        this.setState({
-            txtUsername:"",
-            txtPassword:""
-        })
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isError === false) {
+            this.setState({
+                txtUsername: "",
+                txtPassword: ""
+            })
+        }
     }
+
     render() {
-        const {txtUsername,txtPassword} = this.state;
+        console.log('render login component');
+        const { txtUsername, txtPassword } = this.state;
         return (
             <div className="container ">
                 <div className="row">
@@ -54,11 +57,11 @@ class Login extends Component {
                                 <form onSubmit={this.onSave}>
                                     <div className="form-group">
                                         <label>Email:</label>
-                                        <input type="email" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter email" onChange={this.onChange}/>
+                                        <input type="email" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter email" onChange={this.onChange} />
                                     </div>
                                     <div className="form-group">
                                         <label>Password</label>
-                                        <input type="password" name="txtPassword"  className="form-control" value={txtPassword}  placeholder="Enter Password" onChange={this.onChange}/>
+                                        <input type="password" name="txtPassword" className="form-control" value={txtPassword} placeholder="Enter Password" onChange={this.onChange} />
                                     </div>
                                     <div className="form-group">
                                         <p className="text-center">By signing up you accept our <a>Terms Of Use</a></p>
@@ -73,8 +76,8 @@ class Login extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-12 mb-3 ">
-                                        <p className="text-center" onClick={()=>this.onSignInUsingGoogle()}>
-                                            <a  className="google btn mybtngg"><i className="fa fa-google-plus">
+                                        <p className="text-center" onClick={() => this.onSignInUsingGoogle()}>
+                                            <a className="google btn mybtngg"><i className="fa fa-google-plus">
                                             </i> Sign-in using Google
                                      </a>
                                         </p>
@@ -88,13 +91,9 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-                <NotifiModal 
-                isOpen={this.props.isOpen} 
-                errorMessage = {this.props.errorMessage}
-                onClose={this.onClose}
-                />
+
             </div>
-           
+
         );
     }
 }

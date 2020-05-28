@@ -20,22 +20,13 @@ class SignUp extends Component {
             [name]: value
         });
     }
-    onClose = () => {
-        this.props.onClose();
-        this.setState({
-            txtName: "",
-            txtUsername: "",
-            txtPassword: "",
-            txtRePassword: "",
-        })
-    }
     onSave = (e) => {
         e.preventDefault();
         const name = this.state.txtName;
         const username = this.state.txtUsername;
         const password = this.state.txtPassword;
         const repassword = this.state.txtRePassword;
-        const account = {name, username, password, repassword };
+        const account = { name, username, password, repassword };
         this.onSignup(account);
     }
     onSignup = (account) => {
@@ -44,8 +35,18 @@ class SignUp extends Component {
     onSignInUsingGoogle = () => {
         this.props.onSignInUsingGoogle();
     }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isError === false) {
+            this.setState({
+                txtName: "",
+                txtUsername: "",
+                txtPassword: "",
+                txtRePassword: "",
+            })
+        }
+    }
     render() {
-        const { txtUsername, txtPassword, txtRePassword, txtName} = this.state;
+        const { txtUsername, txtPassword, txtRePassword, txtName } = this.state;
         return (
             <div className="container ">
                 <div className="row">
@@ -102,11 +103,7 @@ class SignUp extends Component {
                         </div>
                     </div>
                 </div>
-                <NotifiModal
-                    isOpen={this.props.isError}
-                    errorMessage={this.props.errorMessage}
-                    onClose={this.onClose}
-                />
+                
             </div>
 
         );
