@@ -17,3 +17,4 @@ export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const FETCH_AUTH = 'FETCH_AUTH';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const HANDLE_ERROR = 'HANDLE_ERROR';

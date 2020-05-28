@@ -8,7 +8,7 @@ import * as typeErrors from '../../constants/ErrorType';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
-import LoadingButton from '../../components/Loading/LoadingButton';
+import LoadingScreen from '../../components/Loading/LoadingScreen';
 import NotifiModal from '../../components/NotifiModal/NotifiModal';
 let firebaseApp = firebase;
 if (!firebase.apps.length) {
@@ -118,7 +118,8 @@ class LoginPage extends Component {
         console.log('render');
         let user = JSON.parse(localStorage.getItem('USER'));
         const { isLoading, isError, errorMessage } = this.state;
-        console.log('loading:' + isLoading);
+        console.log(this.state);
+       // console.log('loading:' + isLoading);
         // console.log(user);
         if (user) {
             //  console.log(user);
@@ -128,7 +129,7 @@ class LoginPage extends Component {
         return (
             <React.Fragment>
                 {isLoading ? (
-                    <LoadingButton />
+                    <LoadingScreen />
                 )
                     :
                     <React.Fragment>

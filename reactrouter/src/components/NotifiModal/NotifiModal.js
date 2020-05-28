@@ -3,35 +3,35 @@ import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 //var Modal = require('react-bootstrap-modal');
 class NotifiModal extends Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            showModal: false,
+    // constructor(props, context) {
+    //     super(props, context);
+    //     this.state = {
+    //         showModal: false,
            
-        }
-    }
+    //     }
+    // }
     // componentDidUpdate(){
     //     this.setState({
     //         isRendering:false,
     //     })
     //    // console.log('componentwillupdate run');
     // }
-    componentWillReceiveProps(nextProps) {
-
-        if (nextProps && nextProps.isOpen) {
-              console.log("componentWillReceiveProps");
-            this.setState({
-                showModal: nextProps.isOpen,
+    // componentWillReceiveProps(nextProps) {
+    //     console.log("componentWillReceiveProps");
+    //     if (nextProps) {
+              
+    //         this.setState({
+    //             showModal: nextProps.isOpen,
                
-            })
-        }
-    }
+    //         })
+    //     }
+    // }
 
 
     close = () => {
-        console.log("runClose");
-        this.setState({ showModal: false }
-        );
+        // console.log("runClose");
+        // this.setState({ showModal: false }
+        // );
         this.props.onClose();
     }
     // shouldComponentUpdate(nextProps,nextState){
@@ -62,15 +62,15 @@ class NotifiModal extends Component {
     //     this.setState({ showModal: true });
     // }
     render() {
-        const { errorMessage } = this.props;
-        console.log(this.state.showModal);
+        const { errorMessage,isOpen } = this.props;
+      //  console.log(this.state.showModal);
         //  console.log(productsTotal.length);
         return (
             <div>
 
 
 
-                <Modal dialogClassName='custom-dialog' animation={false} show={this.state.showModal} onHide={this.close}>
+                <Modal dialogClassName='custom-dialog' animation={false} show={isOpen} onHide={this.close}>
                     <Modal.Header>
                         <Modal.Title>Thông báo</Modal.Title>
                     </Modal.Header>
