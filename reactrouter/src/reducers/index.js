@@ -6,6 +6,7 @@ import quantityModalProduct from './quantityModalProduct';
 import CartProduct from './cartProducts';
 import Login from './login';
 import UpdateMenu from './updateMenu'
+import Error from './error';
 const appReducer = combineReducers ({
     products,
     editProduct,
@@ -14,6 +15,7 @@ const appReducer = combineReducers ({
     CartProduct,
     Login,
     UpdateMenu,
+    Error,
 });
 
 export default appReducer;

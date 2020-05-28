@@ -8,6 +8,8 @@ import * as typeErrors from '../../constants/ErrorType';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
+import LoadingScreen from '../../components/Loading/LoadingScreen';
+import NotifiModal from '../../components/NotifiModal/NotifiModal';
 let firebaseApp = firebase;
 if (!firebase.apps.length) {
     firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -17,7 +19,7 @@ var provider = new firebase.auth.GoogleAuthProvider();
 // firebase.auth().languageCode = 'pt';
 provider.setCustomParameters({
     'login_hint': 'user@example.com'
-  });
+});
 
 // const firebaseAppAuth = firebaseApp.auth();
 // const providers = {
@@ -29,45 +31,50 @@ class LoginPage extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            isOpen: false,
+            isError: false,
             isLogin: false,
+            isLoading: false,
             errorMessage: "",
         }
     }
-
+    onLoading = () => {
+        this.setState({
+            isLoading: true,
+        })
+         //console.log('loading');
+    }
     onSignInUsingGoogle = async () => {
-       await firebase.auth().signInWithPopup(provider).catch(error=> {
+        await this.onLoading();
+        await firebase.auth().signInWithPopup(provider).catch(error => {
             var errorMessage = error.message;
             this.setState({
-                isOpen: true,
+                isError: true,
                 errorMessage: errorMessage,
-            }, () => console.log(this.state.isOpen))
-          });
-          if (this.state.isOpen === false) {
+                isLoading: false,
+            }, () => console.log(this.state.isError))
+        });
+        if (this.state.isError === false) {
             let user = firebase.auth().currentUser;
             let account = { "username": user.displayName, "email": user.email };
             await this.props.Login(account);
             this.setState({
-                isLogin: true,
+                // isLogin: true,
+                isLoading: false,
             });
         }
     }
     onLogin = async (account) => {
-
-        // try {
-        //     firebase.auth().signInWithEmailAndPassword(account.username, account.password);
-
-        // }catch (error) {
-        //    console.log('error');
-        // }
+        await  this.onLoading();
         await firebaseApp.auth().signInWithEmailAndPassword(account.username, account.password).catch(error => {
+
+           
             // Handle Errors here.
             let errorMessage = error.message;
             const errorCode = error.code;
-           switch (errorCode) {
-               case typeErrors.USER_DISABLE:
-                   errorMessage = errorMessages.USER_DISABLE;
-                   break;
+            switch (errorCode) {
+                case typeErrors.USER_DISABLE:
+                    errorMessage = errorMessages.USER_DISABLE;
+                    break;
                 case typeErrors.USER_NOT_FOUND:
                     errorMessage = errorMessages.USER_NOT_FOUND;
                     break;
@@ -77,32 +84,42 @@ class LoginPage extends Component {
                 case typeErrors.WRONG_PASSWORD:
                     errorMessage = errorMessages.WRONG_PASSWORD;
                     break;
-               default:
-                   break;
-           }
+                case typeErrors.INVALID_EMAIL:
+                    errorMessage = errorMessages.INVALID_EMAIL;
+                    break;
+                default:
+                    break;
+            }
             console.log(error.code);
             this.setState({
-                isOpen: true,
+                isError: true,
                 errorMessage: errorMessage,
-            }, () => console.log(this.state.isOpen))
+                isLoading: false,
+            }, () => console.log('end load failed'))
         });
-        if (this.state.isOpen === false) {
+        if (this.state.isError === false) {
             let user = firebase.auth().currentUser;
             let account = { "username": user.displayName, "email": user.email };
             await this.props.Login(account);
             this.setState({
-                isLogin: true,
-            });
+                //   isLogin: true,
+                isLoading: false,
+            }, () => console.log('end load success'));
         }
     }
-    onClose=()=>{
+    onClose = () => {
         this.setState({
-            isOpen:false,
+            isError: false,
+            isLoading: false,
+            errorMessage: "",
         })
     }
     render() {
-        console.log(this.state);
+        console.log('render');
         let user = JSON.parse(localStorage.getItem('USER'));
+        const { isLoading, isError, errorMessage } = this.state;
+        console.log(this.state);
+       // console.log('loading:' + isLoading);
         // console.log(user);
         if (user) {
             //  console.log(user);
@@ -110,15 +127,27 @@ class LoginPage extends Component {
             return <Redirect to="/" />
         }
         return (
-            <div>
-                <Login
-                    onLogin={this.onLogin}
-                    isOpen={this.state.isOpen}
-                    errorMessage={this.state.errorMessage}
-                    onSignInUsingGoogle={this.onSignInUsingGoogle}
-                    onClose={this.onClose}
-                />
-            </div>
+            <React.Fragment>
+                {isLoading ? (
+                    <LoadingScreen />
+                )
+                    :
+                    <React.Fragment>
+                        <Login
+                            onLogin={this.onLogin}
+                            isError={isError}
+                            errorMessage={errorMessage}
+                            onSignInUsingGoogle={this.onSignInUsingGoogle}
+                        />
+                        <NotifiModal
+                            isOpen={isError}
+                            errorMessage={errorMessage}
+                            onClose={this.onClose}
+                        />
+                    </React.Fragment>
+                }
+
+            </React.Fragment>
         );
     }
 }

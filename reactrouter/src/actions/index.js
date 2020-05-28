@@ -18,7 +18,9 @@ export const editProductRequest=(id,product)=>{
         }).then(res => {
            // console.log(res.data);
             dispatch(editProduct(res.data));
-        })
+        }).catch(function (error) {
+            dispatch(handleErrorFetchProduct(error))
+        });
     }
 }
 export const editProduct=(product)=>{
@@ -38,7 +40,9 @@ export const getInforEditProductRequest = (id) => {
         return callAPI(`products/${id}`, 'GET', null).then(res => {
           //  console.log(res.data);
           dispatch(getInforEditProduct(res.data));
-        })
+        }).catch(function (error) {
+            dispatch(handleErrorFetchProduct(error))
+        });
     }
 }
 export const getInforEditProduct = (product) => {
@@ -57,7 +61,9 @@ export const addProductRequest = (product) => {
         }).then(res => {
           //  console.log(res.data);
             dispatch(addProduct(res.data));
-        })
+        }).catch(function (error) {
+            dispatch(handleErrorFetchProduct(error))
+        });
     }
 }
 export const addProduct = (product) => {
@@ -70,7 +76,9 @@ export const deleteProductRequest = (id) => {
     return (dispatch) => {
         return callAPI(`products/${id}`, 'DELETE', null).then(res => {
             dispatch(deleteProduct(id));
-        })
+        }).catch(function (error) {
+            dispatch(handleErrorFetchProduct(error))
+        });
     }
 }
 export const deleteProduct = (id) => {
@@ -85,7 +93,15 @@ export const fetchProductRequest = () => {
         return callAPI('products', 'GET', null).then(res => {
            // console.log(res.data);
             dispatch(fetchProduct(res.data))
+        }).catch(function (error) {
+            dispatch(handleErrorFetchProduct(error))
         });
+    }
+}
+export const handleErrorFetchProduct = (error) =>{
+    return {
+        type: types.HANDLE_ERROR,
+        error
     }
 }
 export const fetchProduct = (products) => {
@@ -123,7 +139,9 @@ export const updateQuantityProductRequest=(number,product)=>{
         }).then(res => {
           //  console.log(res.data);
             dispatch(updateQuantityProduct(number,product));
-        })
+        }).catch(function (error) {
+            dispatch(handleErrorFetchProduct(error))
+        });
     }
 }
 export const updateQuantityProduct=(number,product)=>{
@@ -161,7 +179,9 @@ export const changeStatusRequest=(product)=>{
         }).then(res => {
           //  console.log(res.data);
             dispatch(changeStatus(product));
-        })
+        }).catch(function (error) {
+            dispatch(handleErrorFetchProduct(error))
+        });
     }
 }
 export const changeStatus = (product) =>{

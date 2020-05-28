@@ -5,3 +5,4 @@ export const USER_DISABLE = 'Người dùng đã bị vô hiệu hóa';
 export const WEAK_PASSWORD = 'Mật khẩu yếu ( yêu cầu ít nhất 6 kí tự )';
 export const EMAIL_ALREADY_IN_USE = 'Email đã được sử dụng';
 export const REPASSWORD_NOT_SAME = 'Mật khẩu nhập lại không giống';
+export const INVALID_EMAIL = 'Email không hợp lệ';

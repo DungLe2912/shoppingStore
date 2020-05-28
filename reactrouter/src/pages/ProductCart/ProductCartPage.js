@@ -17,13 +17,14 @@ class ProductCartPage extends Component {
     this.setState({
         productsOnCart:this.props.products,
     });
+    this.props.fetchProductRequest();
    }
    onDelete=(product)=>{
       this.props.deleteProductOnCard(product);
       this.props.updateQuantityProduct(-product.quantity,this.props.productInStore[this.findIndex(product.id,this.props.productInStore)]);
    }
    UNSAFE_componentWillReceiveProps(nextProps){
-    //console.log("UNSAFE_componentWillReceiveProps");
+    console.log("UNSAFE_componentWillReceiveProps");
        if(nextProps && nextProps.products){
            this.setState({
                productsOnCart:nextProps.products,
@@ -58,6 +59,7 @@ class ProductCartPage extends Component {
      //   console.log(data);
     }
     render() {
+        console.log(this.state);
         let {products} = this.props;
         let user = JSON.parse(localStorage.getItem('USER'));
         //  console.log(productOnModal);
@@ -109,6 +111,9 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch, props) => {
     return {
+        fetchProductRequest: () => {
+            dispatch(actions.fetchProductRequest())
+        },
         updateQuantityProductOnCart:(number,product)=>{
             dispatch(actions.updateQuantityProductOnCart(number,product));
         },

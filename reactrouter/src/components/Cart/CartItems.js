@@ -32,7 +32,7 @@ class CartItems extends Component {
     }
     onIncrease=()=>{
         let id=this.findIndex(this.props.product.id,this.props.productInStore);
-       
+       console.log(this.props.productInStore);
       if(id!==-1){
         if(this.state.quantity<this.props.productInStore[id].quantity+this.state.quantityPrev){
           
