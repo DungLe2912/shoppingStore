@@ -1,30 +1,33 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-deprecated */
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
-import products from '../../reducers/products';
-import * as actions from '../../actions/index';
 import { connect } from 'react-redux';
 
 class ModalItems extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            product: {},
-            quantity: 0,
-        }
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      product: {},
+      quantity: 0,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.productOnModal) {
+      this.setState({
+        product: nextProps.productOnModal,
+        quantity: 0,
+      });
+    }
+  }
+
+    onChangeQuantity=(data) => {
+      const { onChangeQuantity } = this.props;
+      onChangeQuantity(data);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps && nextProps.productOnModal) {
-            this.setState({
-                product: nextProps.productOnModal,
-                quantity: 0
-            })
-        }
-    }
-    onChangeQuantity=(data)=>{
-        this.props.onChangeQuantity(data);
-    }
-  
     increaseQuantity() {
         if (this.state.quantity < this.props.productOnModal.quantity) {
           //  console.log("increase");
