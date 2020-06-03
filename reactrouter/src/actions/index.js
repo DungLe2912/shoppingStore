@@ -72,14 +72,13 @@ export const addProduct = (product) => {
         product: product,
     }
 }
-export const deleteProductRequest = (id) => {
-    return (dispatch) => {
-        return callAPI(`products/${id}`, 'DELETE', null).then(res => {
-            dispatch(deleteProduct(id));
-        }).catch(function (error) {
-            dispatch(handleErrorFetchProduct(error))
-        });
-    }
+export const deleteProductRequest = (id) => (dispatch) => {
+    return callAPI(`products/${id}`, 'DELETE', null).then(res => {
+        dispatch(deleteProduct(id));
+    }).catch(function (error) {
+        dispatch(handleErrorFetchProduct(error))
+    });
+
 }
 export const deleteProduct = (id) => {
     return {
