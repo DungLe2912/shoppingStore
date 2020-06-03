@@ -1,25 +1,16 @@
 import * as types from '../constants/ActionTypes';
 
-let initialState = {};
-
-
-
-
+const initialState = {};
 
 const Modal = (state = initialState, action) => {
-    switch (action.type) {
+  switch (action.type) {
+    case types.OPEN_MODAL:
+      // eslint-disable-next-line no-param-reassign
+      state = action.product;
+      return state;
 
-        case types.OPEN_MODAL:
-           
-            state = action.product;
-            // state = {
-            //     ...state,
-            //     quantity:0
-            // }
-            return state;
-       
-        default:
-            return state;
-    }
-}
+    default:
+      return state;
+  }
+};
 export default Modal;

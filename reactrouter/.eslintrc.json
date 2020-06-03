@@ -22,5 +22,9 @@
         "react"
     ],
     "rules": {
-    }
+        "linebreak-style": 0
+        
+    },
+    "parser": "babel-eslint"
+    
 }

@@ -1,69 +1,64 @@
 import React, { Component } from 'react';
-import ProductList from '../../components/ProductList/ProductList';
-import ProductItem from '../../components/ProductItem/ProductItem';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import ProductList from '../../components/ProductList/ProductList';
+import ProductItem from '../../components/ProductItem/ProductItem';
 import * as actions from '../../actions/index';
 import Modal from '../../components/Modal/Modal';
 import LoadingScreen from '../../components/Loading/LoadingScreen';
-import NotifiModal from '../../components/NotifiModal/NotifiModal'
+import NotifiModal from '../../components/NotifiModal/NotifiModal';
+
 class ProductListPage extends Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            isLoading: false,
-            isError:false,
-            errorMessage:"",
-        }
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      isLoading: false,
+      isError: false,
+      // eslint-disable-next-line react/no-unused-state
+      errorMessage: '',
     }
-    // onLoading = () => {
-    //     this.setState({
-    //         isLoading: true,
-    //     })
-    //     //console.log('loading');
-    // }
-    UNSAFE_componentWillMount() {
-        this.setState({
-            isLoading: true,
-        })
+  }
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
+    this.setState({
+      isLoading: true,
+    });
+  }
+
+  componentDidMount() {
+    // eslint-disable-next-line react/prop-types
+    const { fetchProductRequest } = this.props;
+    fetchProductRequest();
+  }
+
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line react/prop-types
+    if (nextProps && nextProps.products) {
+      this.setState({
+        isLoading: false,
+      });
     }
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        
-        if (nextProps && nextProps.products) {
-            console.log('componentwillreceiveprops');
-            this.setState({
-                isLoading: false,
-            })
-        }
-        if(nextProps && nextProps.error!==""){
-            console.log('componentwillreceiveprops');
-            this.setState({
-                isLoading: false,
-                isError:true,
-            })
-        }
+    // eslint-disable-next-line react/prop-types
+    if (nextProps && nextProps.error !== '') {
+      this.setState({
+        isLoading: false,
+        isError: true,
+      });
     }
-    componentDidMount() {
-        console.log('componentDidMount');
-        this.props.fetchProductRequest();
-    }
+  }
+
     onDelete = (id) => {
-        // console.log(id);
-        this.props.deleteProductRequest(id);
+      // eslint-disable-next-line react/prop-types
+      const { deleteProductRequest } = this.props;
+      deleteProductRequest(id);
     }
+
     openModal = (product) => {
         //   console.log(product);
         this.props.openModal(product);
     }
-    // findIndex =(products,id)=>{
-    //     let result = -1;
-    //     products.forEach((product,index) => {
-    //         if(product.id===id){
-    //             result=index;
-    //         }
-    //     });
-    //     return result;
-    // }
     onChangeStatus = (product) => {
         this.props.changeStatus(product);
     }

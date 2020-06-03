@@ -1,22 +1,15 @@
 import * as types from '../constants/ActionTypes';
 
-let initialState = 0;
-
-
-
-
+const initialState = 0;
 
 const quantityModalProduct = (state = initialState, action) => {
-    switch (action.type) {
-
-
-        case types.CHANGE_QUANTITY:
-            
-            state=action.quantity;
-            return state;
-       
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    case types.CHANGE_QUANTITY:
+      // eslint-disable-next-line no-param-reassign
+      state = action.quantity;
+      return state;
+    default:
+      return state;
+  }
+};
 export default quantityModalProduct;
