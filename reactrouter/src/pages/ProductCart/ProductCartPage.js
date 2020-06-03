@@ -1,53 +1,62 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import Cart from '../../components/Cart/Cart'
 import CartItems from '../../components/Cart/CartItems'
 import * as actions from '../../actions/index';
-import { connect } from 'react-redux';
-import {Redirect} from 'react-router-dom';
+
 class ProductCartPage extends Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state={
-            productsOnCart:[],
-            productsOnCartPrev:[],
-        }
-    }
-   componentDidMount(){
-  //  console.log("componentDidMount");
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      productsOnCart: [],
+      productsOnCartPrev: [],
+    };
+  }
+
+  componentDidMount() {
+    // eslint-disable-next-line react/prop-types
+    const { products, fetchProductRequest } = this.props;
     this.setState({
-        productsOnCart:this.props.products,
+      productsOnCart: products,
     });
-    this.props.fetchProductRequest();
-   }
-   onDelete=(product)=>{
-      this.props.deleteProductOnCard(product);
-      this.props.updateQuantityProduct(-product.quantity,this.props.productInStore[this.findIndex(product.id,this.props.productInStore)]);
-   }
-   UNSAFE_componentWillReceiveProps(nextProps){
-    console.log("UNSAFE_componentWillReceiveProps");
-       if(nextProps && nextProps.products){
-           this.setState({
-               productsOnCart:nextProps.products,
-           })
-       }
-   }
-    findIndex=(id,products)=>{
-        let result=-1;
-        products.forEach((product,index) => {
-    
-            if(product.id===id){
-                result=index;
-              //  console.log(product.id);
-            }
-        });
-        return result;
+    fetchProductRequest();
+  }
+
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line react/prop-types
+    if (nextProps && nextProps.products) {
+      this.setState({
+        // eslint-disable-next-line react/prop-types
+        productsOnCart: nextProps.products,
+      });
     }
-    componentWillMount(){
-     //   console.log("componentwillmount");
+  }
+
+   onDelete = (product) => {
+     // eslint-disable-next-line react/prop-types
+     const { deleteProductOnCard, updateQuantityProduct, productInStore } = this.props;
+     deleteProductOnCard(product);
+     updateQuantityProduct(-product.quantity, productInStore[
+       this.findIndex(product.id, productInStore)]);
+   }
+
+    findIndex=(id, products) => {
+      let result = -1;
+      products.forEach((product, index) => {
+        if (product.id === id) {
+          result = index;
+        }
+      });
+      return result;
     }
+
     onChangeQuantity=(number,product)=>{
-       this.props.updateQuantityProductOnCart(number,product);
-       this.props.updateQuantityProduct(number-product.quantity,this.props.productInStore[this.findIndex(product.id,this.props.productInStore)]);
+      // eslint-disable-next-line react/prop-types
+      const { updateQuantityProductOnCart, updateQuantityProduct, productInStore } = this.props;
+      updateQuantityProductOnCart(number, product);
+      updateQuantityProduct(number-product.quantity, productInStore[this.findIndex(product.id, productInStore)]);
     }
     payOnCart=(data)=>{
         console.log("runPayOnCart");
