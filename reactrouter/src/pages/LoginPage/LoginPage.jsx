@@ -1,3 +1,4 @@
+/* eslint-disable react/no-deprecated */
 /* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/jsx-fragments */
@@ -8,7 +9,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 import Login from '../../components/Login/Login';
-import * as actions from '../../actions/index';
+import * as actions from '../../actions/auth';
 import * as errorMessages from '../../constants/ErrorMessageHandle';
 import * as typeErrors from '../../constants/ErrorType';
 import 'firebase/auth';
@@ -43,6 +44,18 @@ class LoginPage extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      if (nextProps.dataLogin.status !== 200) {
+        this.setState({
+          isError: true,
+          isLoading: false,
+          errorMessage: nextProps.dataLogin.message,
+        });
+      }
+    }
+  }
+
     onLoading = () => {
       this.setState({
         isLoading: true,
@@ -72,44 +85,63 @@ class LoginPage extends Component {
       }
     }
 
+    // onLogin = async (account) => {
+    //   const { Login } = this.props;
+    //   await this.onLoading();
+    //   await firebaseApp.auth().signInWithEmailAndPassword(account.username, account.password)
+    //     .catch((error) => {
+    //       // Handle Errors here.
+    //       let errorMessage = error.message;
+    //       const errorCode = error.code;
+    //       switch (errorCode) {
+    //         case typeErrors.USER_DISABLE:
+    //           errorMessage = errorMessages.USER_DISABLE;
+    //           break;
+    //         case typeErrors.USER_NOT_FOUND:
+    //           errorMessage = errorMessages.USER_NOT_FOUND;
+    //           break;
+    //         case typeErrors.NETWORK_REQUEST_FAILED:
+    //           errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
+    //           break;
+    //         case typeErrors.WRONG_PASSWORD:
+    //           errorMessage = errorMessages.WRONG_PASSWORD;
+    //           break;
+    //         case typeErrors.INVALID_EMAIL:
+    //           errorMessage = errorMessages.INVALID_EMAIL;
+    //           break;
+    //         default:
+    //           break;
+    //       }
+    //       this.setState({
+    //         isError: true,
+    //         errorMessage,
+    //         isLoading: false,
+    //       });
+    //     });
+    //   const { isError } = this.state;
+    //   if (isError === false) {
+    //     const user = firebase.auth().currentUser;
+    //     const account = { username: user.displayName, email: user.email };
+    //     await Login(account);
+    //     this.setState({
+    //       isLoading: false,
+    //     });
+    //   }
+    // }
     onLogin = async (account) => {
-      const { isError } = this.state;
       const { Login } = this.props;
       await this.onLoading();
-      await firebaseApp.auth().signInWithEmailAndPassword(account.username, account.password)
-        .catch((error) => {
-          // Handle Errors here.
-          let errorMessage = error.message;
-          const errorCode = error.code;
-          switch (errorCode) {
-            case typeErrors.USER_DISABLE:
-              errorMessage = errorMessages.USER_DISABLE;
-              break;
-            case typeErrors.USER_NOT_FOUND:
-              errorMessage = errorMessages.USER_NOT_FOUND;
-              break;
-            case typeErrors.NETWORK_REQUEST_FAILED:
-              errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
-              break;
-            case typeErrors.WRONG_PASSWORD:
-              errorMessage = errorMessages.WRONG_PASSWORD;
-              break;
-            case typeErrors.INVALID_EMAIL:
-              errorMessage = errorMessages.INVALID_EMAIL;
-              break;
-            default:
-              break;
-          }
-          this.setState({
-            isError: true,
-            errorMessage,
-            isLoading: false,
-          });
-        });
-      if (isError === false) {
-        const user = firebase.auth().currentUser;
-        const account = { username: user.displayName, email: user.email };
+      try {
         await Login(account);
+      } catch (error) {
+        this.setState({
+          isError: true,
+          errorMessage: error,
+          isLoading: false,
+        });
+      }
+      const { isError } = this.state;
+      if (isError === false) {
         this.setState({
           isLoading: false,
         });
@@ -126,6 +158,7 @@ class LoginPage extends Component {
 
     render() {
       const user = JSON.parse(localStorage.getItem('USER'));
+      // const user = 1;
       const { isLoading, isError, errorMessage } = this.state;
       if (user) {
         return <Redirect to="/" />;
@@ -153,12 +186,12 @@ class LoginPage extends Component {
       );
     }
 }
-const mapStateToProps = () => ({
-
+const mapStateToProps = (state) => ({
+  dataLogin: state.Login,
 });
 const mapDispatchToProps = (dispatch) => ({
   Login: (account) => {
-    dispatch(actions.Login(account));
+    dispatch(actions.signInRequest(account));
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

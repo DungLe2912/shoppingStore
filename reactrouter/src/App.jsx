@@ -2,7 +2,7 @@ import './App.css';
 import React, { Component } from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import Menu from './components/Menu/Menu';
-import routes from './routes';
+import routes from './routes/routes';
 
 
 class App extends Component {

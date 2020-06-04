@@ -1,12 +1,12 @@
 import React from 'react';
-import HomePage from './pages/HomePage/HomePage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import ProductListPage from './pages/ProductListPage/ProductListPage';
-import ProductActionPage from './pages/ProductActionPage/ProductActionPage';
-import ProductCartPage from './pages/ProductCart/ProductCartPage';
-import LoginPage from './pages/LoginPage/LoginPage';
-import LogoutPage from './pages/Logout/LogoutPage';
-import SignupPage from './pages/SignupPage/SignupPage';
+import HomePage from '../pages/HomePage/HomePage';
+import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import ProductListPage from '../pages/ProductListPage/ProductListPage';
+import ProductActionPage from '../pages/ProductActionPage/ProductActionPage';
+import ProductCartPage from '../pages/ProductCart/ProductCartPage';
+import LoginPage from '../pages/LoginPage/LoginPage';
+import LogoutPage from '../pages/Logout/LogoutPage';
+import SignupPage from '../pages/SignupPage/SignupPage';
 
 const routes = [
   {

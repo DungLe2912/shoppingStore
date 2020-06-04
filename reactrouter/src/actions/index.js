@@ -1,215 +1,151 @@
 import * as types from '../constants/ActionTypes';
 import callAPI from '../utils/APICaller';
 
-export const openModal=(product)=>{
-    return {
-        type:types.OPEN_MODAL,
-        product:product
-    }
-}
+export const handleErrorFetchProduct = (error) => ({
+  type: types.HANDLE_ERROR,
+  error,
+});
+export const openModal = (product) => ({
+  type: types.OPEN_MODAL,
+  product,
+});
+export const editProduct = (product) => ({
+  type: types.EDIT_PRODUCT,
+  product,
+});
 
-export const editProductRequest=(id,product)=>{
-    return dispatch=>{
-        return  callAPI(`products/${id}`, 'PUT', {
-            name: product.txtName,
-            price: product.txtPrice,
-            status: product.chkbStatus,
-            quantity:product.txtQuantity
-        }).then(res => {
-           // console.log(res.data);
-            dispatch(editProduct(res.data));
-        }).catch(function (error) {
-            dispatch(handleErrorFetchProduct(error))
-        });
-    }
-}
-export const editProduct=(product)=>{
-    return {
-        type:types.EDIT_PRODUCT,
-        product:product
-    }
-}
-export const saveChangeEditProduct = (product) => {
-    return {
-        type: types.GET_INFOR_EDIT_PRODUCT,
-        product: product
-    }
-}
-export const getInforEditProductRequest = (id) => {
-    return dispatch => {
-        return callAPI(`products/${id}`, 'GET', null).then(res => {
-          //  console.log(res.data);
-          dispatch(getInforEditProduct(res.data));
-        }).catch(function (error) {
-            dispatch(handleErrorFetchProduct(error))
-        });
-    }
-}
-export const getInforEditProduct = (product) => {
-    return {
-        type: types.GET_INFOR_EDIT_PRODUCT,
-        product: product
-    }
-}
-export const addProductRequest = (product) => {
-    return dispatch => {
-        return callAPI('products', 'POST', {
-            name: product.txtName,
-            price: product.txtPrice,
-            status: product.chkbStatus,
-            quantity:product.txtQuantity
-        }).then(res => {
-          //  console.log(res.data);
-            dispatch(addProduct(res.data));
-        }).catch(function (error) {
-            dispatch(handleErrorFetchProduct(error))
-        });
-    }
-}
-export const addProduct = (product) => {
-    return {
-        type: types.ADD_PRODUCT,
-        product: product,
-    }
-}
-export const deleteProductRequest = (id) => (dispatch) => {
-    return callAPI(`products/${id}`, 'DELETE', null).then(res => {
-        dispatch(deleteProduct(id));
-    }).catch(function (error) {
-        dispatch(handleErrorFetchProduct(error))
-    });
+export const editProductRequest = (id, product) => (dispatch) => callAPI(`products/${id}`, 'PUT', {
+  name: product.txtName,
+  price: product.txtPrice,
+  status: product.chkbStatus,
+  quantity: product.txtQuantity,
+}).then((res) => {
+  // console.log(res.data);
+  dispatch(editProduct(res.data));
+}).catch((error) => {
+  dispatch(handleErrorFetchProduct(error));
+});
 
-}
-export const deleteProduct = (id) => {
-    return {
-        type: types.DELETE_PRODUCT,
-        id: id,
-    }
-}
+export const saveChangeEditProduct = (product) => ({
+  type: types.GET_INFOR_EDIT_PRODUCT,
+  product,
+});
+export const getInforEditProduct = (product) => ({
+  type: types.GET_INFOR_EDIT_PRODUCT,
+  product,
+});
+export const getInforEditProductRequest = (id) => (dispatch) => callAPI(`products/${id}`, 'GET', null).then((res) => {
+  //  console.log(res.data);
+  dispatch(getInforEditProduct(res.data));
+}).catch((error) => {
+  dispatch(handleErrorFetchProduct(error));
+});
+export const addProduct = (product) => ({
+  type: types.ADD_PRODUCT,
+  product,
+});
+export const addProductRequest = (product) => (dispatch) => callAPI('products', 'POST', {
+  name: product.txtName,
+  price: product.txtPrice,
+  status: product.chkbStatus,
+  quantity: product.txtQuantity,
+}).then((res) => {
+  //  console.log(res.data);
+  dispatch(addProduct(res.data));
+}).catch((error) => {
+  dispatch(handleErrorFetchProduct(error));
+});
+export const deleteProduct = (id) => ({
+  type: types.DELETE_PRODUCT,
+  id,
+});
+export const deleteProductRequest = (id) => (dispatch) => callAPI(`products/${id}`, 'DELETE', null).then(() => {
+  dispatch(deleteProduct(id));
+}).catch((error) => {
+  dispatch(handleErrorFetchProduct(error));
+});
 
-export const fetchProductRequest = () => {
-    return (dispatch) => {
-        return callAPI('products', 'GET', null).then(res => {
-           // console.log(res.data);
-            dispatch(fetchProduct(res.data))
-        }).catch(function (error) {
-            dispatch(handleErrorFetchProduct(error))
-        });
-    }
-}
-export const handleErrorFetchProduct = (error) =>{
-    return {
-        type: types.HANDLE_ERROR,
-        error
-    }
-}
-export const fetchProduct = (products) => {
-    return {
-        type: types.FETCH_PRODUCTS,
-        products: products
-    }
-}
-export const changeQuantity=(quantity)=>{
-    return {
-        type:types.CHANGE_QUANTITY,
-        quantity:quantity
-    }
-}
+export const fetchProduct = (products) => ({
+  type: types.FETCH_PRODUCTS,
+  products,
+});
+export const fetchProductRequest = () => (dispatch) => callAPI('products', 'GET', null).then((res) => {
+  // console.log(res.data);
+  dispatch(fetchProduct(res.data));
+}).catch((error) => {
+  dispatch(handleErrorFetchProduct(error));
+});
 
-export const addProductToCart=(product,quantity)=>{
-    return {
-        type:types.ADD_TO_CART,
-        product:product,
-        quantity
-    }
-}
-export const fetchProductOnCart=()=>{
-    return {
-        type:types.FETCH_PRODUCT_CART,
-    }
-}
-export const updateQuantityProductRequest=(number,product)=>{
-    return dispatch=>{
-        return  callAPI(`products/${product.id}`, 'PUT', {
-            name: product.name,
-            price: product.price,
-            status: product.status,
-            quantity:product.quantity-number
-        }).then(res => {
-          //  console.log(res.data);
-            dispatch(updateQuantityProduct(number,product));
-        }).catch(function (error) {
-            dispatch(handleErrorFetchProduct(error))
-        });
-    }
-}
-export const updateQuantityProduct=(number,product)=>{
-    return {
-        type:types.UPDATE_QUANTITY_PRODUCT,
-        number,
-        product
-    }
-}
-export const updateQuantityProductOnCart = (number,product) =>{
-    return {
-        type: types.UPDATE_QUANTITY_PRODUCT_ON_CART,
-        number,
-        product,
-    }
-}
-export const payCart = ()=>{
-    return {
-        type:types.PAY_CART,
-    }
-}
-export const deleteProductOnCard=(product)=>{
-    return {
-        type:types.DELETE_PRODUCT_ON_CART,
-        product
-    }
-}
-export const changeStatusRequest=(product)=>{
-    return dispatch=>{
-        return  callAPI(`products/${product.id}`, 'PUT', {
-            name: product.name,
-            price: product.price,
-            status: !product.status,
-            quantity:product.quantity
-        }).then(res => {
-          //  console.log(res.data);
-            dispatch(changeStatus(product));
-        }).catch(function (error) {
-            dispatch(handleErrorFetchProduct(error))
-        });
-    }
-}
-export const changeStatus = (product) =>{
-    return {
-        type:types.CHANGE_STATUS,
-        product
-    }
-}
-export const fetchAuthRequest=()=>{
-    return dispatch=>{
-        return callAPI('users','GET',null).then(res=>{
-            dispatch(fetchAuth(res.data));
-        })
-    }
-}
-export const fetchAuth = (accounts)=>{
-    return {
-        type:types.FETCH_AUTH,
-        accounts
-    }
-}
-export const Login = (account)=>{
-    return {
-        type:types.LOGIN,
-        account
-    }
-}
-export const Logout = ()=>{
-    return {
-        type:types.LOGOUT,
-    }
-}
+
+export const changeQuantity = (quantity) => ({
+  type: types.CHANGE_QUANTITY,
+  quantity,
+});
+
+export const addProductToCart = (product, quantity) => ({
+  type: types.ADD_TO_CART,
+  product,
+  quantity,
+});
+export const fetchProductOnCart = () => ({
+  type: types.FETCH_PRODUCT_CART,
+});
+export const updateQuantityProduct = (number, product) => ({
+  type: types.UPDATE_QUANTITY_PRODUCT,
+  number,
+  product,
+});
+export const updateQuantityProductRequest = (number, product) => (dispatch) => callAPI(`products/${product.id}`, 'PUT', {
+  name: product.name,
+  price: product.price,
+  status: product.status,
+  quantity: product.quantity - number,
+}).then(() => {
+  //  console.log(res.data);
+  dispatch(updateQuantityProduct(number, product));
+}).catch((error) => {
+  dispatch(handleErrorFetchProduct(error));
+});
+
+export const updateQuantityProductOnCart = (number, product) => ({
+  type: types.UPDATE_QUANTITY_PRODUCT_ON_CART,
+  number,
+  product,
+});
+export const payCart = () => ({
+  type: types.PAY_CART,
+});
+export const deleteProductOnCard = (product) => ({
+  type: types.DELETE_PRODUCT_ON_CART,
+  product,
+});
+export const changeStatus = (product) => ({
+  type: types.CHANGE_STATUS,
+  product,
+});
+export const changeStatusRequest = (product) => (dispatch) => callAPI(`products/${product.id}`, 'PUT', {
+  name: product.name,
+  price: product.price,
+  status: !product.status,
+  quantity: product.quantity,
+}).then(() => {
+  //  console.log(res.data);
+  dispatch(changeStatus(product));
+}).catch((error) => {
+  dispatch(handleErrorFetchProduct(error));
+});
+export const fetchAuth = (accounts) => ({
+  type: types.FETCH_AUTH,
+  accounts,
+});
+export const fetchAuthRequest = () => (dispatch) => callAPI('users', 'GET', null).then((res) => {
+  dispatch(fetchAuth(res.data));
+});
+
+export const Login = (account) => ({
+  type: types.LOGIN,
+  account,
+});
+export const Logout = () => ({
+  type: types.LOGOUT,
+});
