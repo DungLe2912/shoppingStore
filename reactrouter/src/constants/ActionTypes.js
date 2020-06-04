@@ -19,3 +19,4 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const HANDLE_ERROR = 'HANDLE_ERROR';
 export const SIGN_IN = 'SIGN_IN';
+export const GET_INFOR = 'GET_INFOR';

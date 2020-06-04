@@ -44,17 +44,21 @@ class LoginPage extends Component {
     };
   }
 
+
   componentWillReceiveProps(nextProps) {
     if (nextProps) {
+      const { GetInforUser } = this.props;
       if (nextProps.dataLogin.status !== 200) {
+        const token = JSON.parse(localStorage.getItem('TOKEN'));
         this.setState({
           isError: true,
           isLoading: false,
           errorMessage: nextProps.dataLogin.message,
-        });
+        }, () => GetInforUser(token));
       }
     }
   }
+
 
     onLoading = () => {
       this.setState({
@@ -192,6 +196,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   Login: (account) => {
     dispatch(actions.signInRequest(account));
+  },
+  GetInforUser: (token) => {
+    dispatch(actions.getInforRequest(token));
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

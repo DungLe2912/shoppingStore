@@ -11,12 +11,12 @@ const Login = (state = initialState, action) => {
       return state;
     case types.SIGN_IN:
       if (action.status === 200) {
-        localStorage.setItem('USER', JSON.stringify(action.token));
+        localStorage.setItem('TOKEN', JSON.stringify(action.token));
       }
       state = action;
       return state;
     case types.LOGOUT:
-      localStorage.removeItem('USER');
+      localStorage.removeItem('TOKEN');
       return state;
     default:
       return state;
