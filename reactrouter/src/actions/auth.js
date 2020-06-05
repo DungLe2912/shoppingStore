@@ -1,18 +1,32 @@
 import * as types from '../constants/ActionTypes';
 import callAPI from '../utils/APICaller';
-import handleError from './index';
-import { signin } from '../constants/api';
+import { signin, inforUser } from '../constants/api';
 import { defaultHeader } from '../constants/Config';
+import errorCode from '../constants/errCode';
 
-export const signIn = (status, message, token) => ({
+export const signIn = (status, data, err) => ({
   type: types.SIGN_IN,
   status,
-  message,
-  token,
+  data,
+  err,
 });
 export const signInRequest = (account) => (dispatch) => callAPI(`${signin}`, 'POST', defaultHeader, account)
   .then((res) => {
-    dispatch(signIn(res.status, res.data.message, res.data.token));
+    if (res.err === errorCode.ECONNREFUSED) {
+      dispatch(signIn(null, null, errorCode.ECONNREFUSED));
+    } else {
+      dispatch(signIn(res.status, res.data, null));
+    }
   }).catch(() => {
   //  dispatch(handleError(error));
+  });
+export const getInfor = (status, data) => ({
+  type: types.GET_INFOR,
+  status,
+  data,
+});
+export const getInforRequest = (headerRequest) => (dispatch) => callAPI(`${inforUser}`, 'GET', headerRequest, null)
+  .then((res) => {
+    dispatch(getInfor(res.status, res.data));
+  }).catch(() => {
   });

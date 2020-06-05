@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import ProductList from '../../components/ProductList/ProductList';
 import ProductItem from '../../components/ProductItem/ProductItem';
-import * as actions from '../../actions/index';
+import * as actions from '../../actions/products';
 import Modal from '../../components/Modal/Modal';
 import LoadingScreen from '../../components/Loading/LoadingScreen';
 import NotifiModal from '../../components/NotifiModal/NotifiModal';

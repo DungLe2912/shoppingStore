@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as firebase from 'firebase/app';
-import * as actions from '../../actions/index';
+import * as actions from '../../actions/products';
 import SignUp from '../../components/SignUp/SignUp';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
@@ -106,33 +106,33 @@ class SignupPage extends Component {
       }
     }
 
-    onSignInUsingGoogle = async () => {
-      // eslint-disable-next-line no-console
-      console.log('sign in using gg');
-      await this.onLoading();
-      await firebase.auth().signInWithPopup(provider).catch((error) => {
-        const errorMessage = error.message;
-        // eslint-disable-next-line no-console
-        console.log(error.code);
-        this.setState({
-          isError: true,
-          errorMessage,
-          isLoading: false,
-        });
-      });
-      const { isError } = this.state;
-      // eslint-disable-next-line react/prop-types
-      const { Login } = this.props;
-      if (isError === false) {
-        const user = firebase.auth().currentUser;
-        const account = { username: user.displayName, email: user.email };
-        await Login(account);
-        this.setState({
-          isSignupGoogle: true,
-          isLoading: false,
-        });
-      }
-    }
+    // onSignInUsingGoogle = async () => {
+    //   // eslint-disable-next-line no-console
+    //   console.log('sign in using gg');
+    //   await this.onLoading();
+    //   await firebase.auth().signInWithPopup(provider).catch((error) => {
+    //     const errorMessage = error.message;
+    //     // eslint-disable-next-line no-console
+    //     console.log(error.code);
+    //     this.setState({
+    //       isError: true,
+    //       errorMessage,
+    //       isLoading: false,
+    //     });
+    //   });
+    //   const { isError } = this.state;
+    //   // eslint-disable-next-line react/prop-types
+    //   const { Login } = this.props;
+    //   if (isError === false) {
+    //     const user = firebase.auth().currentUser;
+    //     const account = { username: user.displayName, email: user.email };
+    //     await Login(account);
+    //     this.setState({
+    //       isSignupGoogle: true,
+    //       isLoading: false,
+    //     });
+    //   }
+    // }
 
     onClose = () => {
       this.setState({
@@ -184,9 +184,7 @@ const mapStateToProps = () => ({
 
 });
 const mapDispatchToProps = (dispatch) => ({
-  Login: (account) => {
-    dispatch(actions.Login(account));
-  },
+  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

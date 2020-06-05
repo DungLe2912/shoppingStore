@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Logout from '../../components/Logout/Logout';
-import * as actions from '../../actions/index';
+import * as actions from '../../actions/products';
 
 class LogoutPage extends Component {
     onLogout= () => {
