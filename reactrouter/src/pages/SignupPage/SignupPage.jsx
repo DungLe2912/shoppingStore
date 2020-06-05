@@ -61,32 +61,33 @@ class SignupPage extends Component {
         });
       } else {
         await this.onLoading();
-        await firebaseApp.auth().createUserWithEmailAndPassword(account.username, account.password)
-          .catch((error) => {
-            let errorMessage = error.message;
-            const errorCode = error.code;
-            switch (errorCode) {
-              case typeErrors.WEAK_PASSWORD:
-                errorMessage = errorMessages.WEAK_PASSWORD;
-                break;
-              case typeErrors.EMAIL_ALREADY_IN_USE:
-                errorMessage = errorMessages.EMAIL_ALREADY_IN_USE;
-                break;
-              case typeErrors.NETWORK_REQUEST_FAILED:
-                errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
-                break;
-              case typeErrors.INVALID_EMAIL:
-                errorMessage = errorMessages.INVALID_EMAIL;
-                break;
-              default:
-                break;
-            }
-            this.setState({
-              isError: true,
-              errorMessage,
-              isLoading: false,
-            });
-          });
+        // await firebaseApp.auth().createUserWithEmailAndPassword(account.username, account.password)
+        //   .catch((error) => {
+        //     let errorMessage = error.message;
+        //     const errorCode = error.code;
+        //     switch (errorCode) {
+        //       case typeErrors.WEAK_PASSWORD:
+        //         errorMessage = errorMessages.WEAK_PASSWORD;
+        //         break;
+        //       case typeErrors.EMAIL_ALREADY_IN_USE:
+        //         errorMessage = errorMessages.EMAIL_ALREADY_IN_USE;
+        //         break;
+        //       case typeErrors.NETWORK_REQUEST_FAILED:
+        //         errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
+        //         break;
+        //       case typeErrors.INVALID_EMAIL:
+        //         errorMessage = errorMessages.INVALID_EMAIL;
+        //         break;
+        //       default:
+        //         break;
+        //     }
+        //     this.setState({
+        //       isError: true,
+        //       errorMessage,
+        //       isLoading: false,
+        //     });
+        //   });
+        
         const { isError } = this.state;
         if (isError === false) {
           const user = firebase.auth().currentUser;

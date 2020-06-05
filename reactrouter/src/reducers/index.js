@@ -8,6 +8,7 @@ import Login from './login';
 import UpdateMenu from './updateMenu';
 import Error from './error';
 import InforUser from './inforUser';
+import SignUp from './signup';
 
 const appReducer = combineReducers({
   products,
@@ -19,6 +20,7 @@ const appReducer = combineReducers({
   UpdateMenu,
   Error,
   InforUser,
+  SignUp,
 });
 
 export default appReducer;
