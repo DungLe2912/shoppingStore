@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/index';
+import * as actions from '../../actions/products';
 import NotifiModal from '../../components/NotifiModal/NotifiModal';
 import LoadingScreen from '../../components/Loading/LoadingScreen';
 

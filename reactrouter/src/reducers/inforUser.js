@@ -1,15 +1,19 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import * as types from '../constants/ActionTypes';
 
-const initialState = {};
+const data = JSON.parse(localStorage.getItem('USER'));
+const initialState = data || {};
 
-const Error = (state = initialState, action) => {
+const InforUser = (state = initialState, action) => {
   switch (action.type) {
     case types.GET_INFOR:
-      state = action.infor;
+      const status = { status: action.status };
+      localStorage.setItem('USER', JSON.stringify(action.data));
+      state = { ...action.data, ...status };
       return state;
     default:
       return state;
   }
 };
-export default Error;
+export default InforUser;

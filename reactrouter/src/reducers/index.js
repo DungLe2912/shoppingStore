@@ -7,6 +7,7 @@ import CartProduct from './cartProducts';
 import Login from './login';
 import UpdateMenu from './updateMenu';
 import Error from './error';
+import InforUser from './inforUser';
 
 const appReducer = combineReducers({
   products,
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   Login,
   UpdateMenu,
   Error,
+  InforUser,
 });
 
 export default appReducer;

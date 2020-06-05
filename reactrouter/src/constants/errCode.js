@@ -1,0 +1,5 @@
+module.exports = {
+  NO_DATA: 'ERR_NO_DATA',
+  LOGIN_FAIL: 'LOGIN_FAIL',
+  ECONNREFUSED: 'ECONNREFUSED',
+};

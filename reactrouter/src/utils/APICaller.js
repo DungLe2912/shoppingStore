@@ -1,16 +1,18 @@
 import axios from 'axios';
 import * as Config from '../constants/Config';
 
-export default function callAPI(endpoint, method = 'GET', header, body) {
+export default function callAPI(endpoint, method = 'GET', headers, body) {
   return axios(
     {
       method,
       url: `${Config.API_URL}/${endpoint}`,
-      header,
+      headers,
       data: body,
     },
-  ).catch((err) => {
+  ).catch(() =>
     // eslint-disable-next-line no-console
-    console.log(err);
-  });
+    // eslint-disable-next-line implicit-arrow-linebreak
+    ({
+      err: 'ECONNREFUSED',
+    }));
 }

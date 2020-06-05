@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Cart from '../../components/Cart/Cart';
 import CartItems from '../../components/Cart/CartItems';
-import * as actions from '../../actions/index';
+import * as actions from '../../actions/products';
 
 class ProductCartPage extends Component {
   constructor(props, context) {

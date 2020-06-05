@@ -6,7 +6,7 @@ const initialState = !!data;
 
 const UpdateMenu = (state = initialState, action) => {
   switch (action.type) {
-    case types.SIGN_IN:
+    case types.GET_INFOR:
       if (action.status === 200) {
         state = true;
       }

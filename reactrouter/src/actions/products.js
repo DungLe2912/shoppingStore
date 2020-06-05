@@ -134,18 +134,8 @@ export const changeStatusRequest = (product) => (dispatch) => callAPI(`products/
 }).catch((error) => {
   dispatch(handleErrorFetchProduct(error));
 });
-export const fetchAuth = (accounts) => ({
-  type: types.FETCH_AUTH,
-  accounts,
-});
-export const fetchAuthRequest = () => (dispatch) => callAPI('users', 'GET', null).then((res) => {
-  dispatch(fetchAuth(res.data));
-});
 
-export const Login = (account) => ({
-  type: types.LOGIN,
-  account,
-});
+
 export const Logout = () => ({
   type: types.LOGOUT,
 });

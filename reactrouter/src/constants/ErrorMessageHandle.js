@@ -6,3 +6,4 @@ export const WEAK_PASSWORD = 'Mật khẩu yếu ( yêu cầu ít nhất 6 kí t
 export const EMAIL_ALREADY_IN_USE = 'Email đã được sử dụng';
 export const REPASSWORD_NOT_SAME = 'Mật khẩu nhập lại không giống';
 export const INVALID_EMAIL = 'Email không hợp lệ';
+export const ECONNREFUSED = 'Mất kết nối tới server';

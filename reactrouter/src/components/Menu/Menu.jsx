@@ -8,7 +8,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/index';
+import * as actions from '../../actions/products';
 
 const menus = [
   {
@@ -96,7 +96,7 @@ class Menu extends Component {
         result = menus.map((menu, index) => (
           <MenuLink
             key={index}
-            label={(isUpdated === true && menu.name === 'Đăng nhập' && user !== null) ? `Xin chào ${user.username} (Đăng xuất)` : menu.name}
+            label={(isUpdated === true && menu.name === 'Đăng nhập' && user !== null) ? `Xin chào ${user.dataUser.firstname} ${user.dataUser.lastname} (Đăng xuất)` : menu.name}
             to={(isUpdated === true && menu.name === 'Đăng nhập') ? '/logout' : menu.to}
             activeOnlyWhenExact={menu.exact}
           />

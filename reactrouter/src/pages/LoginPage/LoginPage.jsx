@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 /* eslint-disable react/no-deprecated */
 /* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable react/jsx-wrap-multilines */
@@ -10,12 +11,13 @@ import { Redirect } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 import Login from '../../components/Login/Login';
 import * as actions from '../../actions/auth';
-import * as errorMessages from '../../constants/ErrorMessageHandle';
-import * as typeErrors from '../../constants/ErrorType';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
 import LoadingScreen from '../../components/Loading/LoadingScreen';
 import NotifiModal from '../../components/NotifiModal/NotifiModal';
+import { defaultHeader } from '../../constants/Config';
+import errorCode from '../../constants/errCode';
+import * as errMessage from '../../constants/ErrorMessageHandle';
 
 let firebaseApp = firebase;
 if (!firebase.apps.length) {
@@ -47,18 +49,40 @@ class LoginPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps) {
-      const { GetInforUser } = this.props;
-      if (nextProps.dataLogin.status !== 200) {
-        const token = JSON.parse(localStorage.getItem('TOKEN'));
+      if (nextProps.dataLogin.err === errorCode.ECONNREFUSED) {
+        this.setState({
+          isLoading: false,
+          isError: true,
+          errorMessage: errMessage.ECONNREFUSED,
+        });
+      } else if (nextProps.dataLogin.data.errCode === errorCode.LOGIN_FAIL) {
         this.setState({
           isError: true,
+          errorMessage: nextProps.dataLogin.data.message,
           isLoading: false,
-          errorMessage: nextProps.dataLogin.message,
-        }, () => GetInforUser(token));
+        });
+      } else {
+        const token = JSON.parse(localStorage.getItem('TOKEN'));
+        if (token !== '') {
+          this.onGetInforUser(token);
+        }
       }
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.dataUser) {
+      return true;
+    }
+    return false;
+  }
+
+  onGetInforUser = (token) => {
+    const { GetInforUser } = this.props;
+    const bearerToken = { 'Authorization': `Bearer ${token}` };
+    const headerRequest = { ...defaultHeader, ...bearerToken };
+    GetInforUser(headerRequest);
+  }
 
     onLoading = () => {
       this.setState({
@@ -135,21 +159,7 @@ class LoginPage extends Component {
     onLogin = async (account) => {
       const { Login } = this.props;
       await this.onLoading();
-      try {
-        await Login(account);
-      } catch (error) {
-        this.setState({
-          isError: true,
-          errorMessage: error,
-          isLoading: false,
-        });
-      }
-      const { isError } = this.state;
-      if (isError === false) {
-        this.setState({
-          isLoading: false,
-        });
-      }
+      await Login(account);
     }
 
     onClose = () => {
@@ -164,7 +174,7 @@ class LoginPage extends Component {
       const user = JSON.parse(localStorage.getItem('USER'));
       // const user = 1;
       const { isLoading, isError, errorMessage } = this.state;
-      if (user) {
+      if (user !== null) {
         return <Redirect to="/" />;
       }
       return (
@@ -192,6 +202,7 @@ class LoginPage extends Component {
 }
 const mapStateToProps = (state) => ({
   dataLogin: state.Login,
+  dataUser: state.InforUser,
 });
 const mapDispatchToProps = (dispatch) => ({
   Login: (account) => {
