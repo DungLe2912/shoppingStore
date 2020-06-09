@@ -8,6 +8,7 @@ import * as actions from '../../actions/auth';
 import LoadingScreen from '../../components/Loading/LoadingScreen';
 import Verify from '../../components/Verify/Verify';
 import NotifiModal from '../../components/NotifiModal/NotifiModal';
+import * as errMessage from '../../constants/ErrorMessageHandle';
 
 class VerifyPage extends Component {
   constructor(props, context) {
@@ -32,6 +33,21 @@ class VerifyPage extends Component {
       isLoading: false,
       errorMessage: '',
     });
+  }
+
+  onVerify = async (code) => {
+    const { dataSignUp } = this.props;
+    await this.onLoading();
+    if (code !== dataSignUp.data.username) {
+      this.setState({
+        isError: true,
+        errorMessage: errMessage.REPASSWORD_NOT_SAME,
+        isLoading: false,
+      });
+    } else {
+      const { SignUp } = this.props;
+      await SignUp(account);
+    }
   }
 
   render() {
@@ -63,6 +79,7 @@ const mapStateToProps = (state) => ({
   dataSignUp: state.SignUp,
 });
 const mapDispatchToProps = (dispatch) => ({
+  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyPage);

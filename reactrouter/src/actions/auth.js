@@ -1,6 +1,8 @@
 import * as types from '../constants/ActionTypes';
 import callAPI from '../utils/APICaller';
-import { signin, inforUser, register } from '../constants/api';
+import {
+  signin, inforUser, register, verify, activate,
+} from '../constants/api';
 import { defaultHeader } from '../constants/Config';
 import errorCode from '../constants/errCode';
 
@@ -33,6 +35,37 @@ export const signUpRequest = (account) => (dispatch) => callAPI(`${register}`, '
       dispatch(SignUp(null, null, errorCode.ECONNREFUSED));
     } else {
       dispatch(SignUp(res.status, res.data, null));
+    }
+  }).catch(() => {
+    //  dispatch(handleError(error));
+  });
+export const Verify = (status, data, err) => ({
+  type: types.VERIFY_CODE,
+  status,
+  data,
+  err,
+});
+export const VerifyRequest = (data) => (dispatch) => callAPI(`${verify}`, 'POST', defaultHeader, data)
+  .then((res) => {
+    if (res.err === errorCode.ECONNREFUSED) {
+      dispatch(Verify(null, null, errorCode.ECONNREFUSED));
+    } else {
+      dispatch(Verify(res.status, res.data, null));
+    }
+  }).catch(() => {
+    //  dispatch(handleError(error));
+  });
+export const ActivateAccount = (status, data, err) => ({
+  type: types.VERIFY_CODE,
+  status,
+  err,
+});
+export const ActivateAccountRequest = (username) => (dispatch) => callAPI(`${activate}`, 'PUT', defaultHeader, username)
+  .then((res) => {
+    if (res.err === errorCode.ECONNREFUSED) {
+      dispatch(ActivateAccount(null, errorCode.ECONNREFUSED));
+    } else {
+      dispatch(ActivateAccount(res.status, null));
     }
   }).catch(() => {
     //  dispatch(handleError(error));
