@@ -1,27 +1,31 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-deprecated */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Login extends Component {
+class SignUp extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      txtEmail: '',
       txtUsername: '',
       txtPassword: '',
+      txtRePassword: '',
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isError === false) {
       this.setState({
+        txtEmail: '',
         txtUsername: '',
         txtPassword: '',
+        txtRePassword: '',
       });
     }
   }
@@ -36,17 +40,23 @@ class Login extends Component {
     }
 
     onSave = (e) => {
-      const { txtUsername, txtPassword } = this.state;
+      const {
+        txtEmail, txtUsername, txtPassword, txtRePassword,
+      } = this.state;
       e.preventDefault();
+      const email = txtEmail;
       const username = txtUsername;
       const password = txtPassword;
-      const account = { username, password };
-      this.onLogin(account);
+      const repassword = txtRePassword;
+      const account = {
+        email, username, password, repassword,
+      };
+      this.onSignup(account);
     }
 
-    onLogin = (account) => {
-      const { onLogin } = this.props;
-      onLogin(account);
+    onSignup = (account) => {
+      const { onSignup } = this.props;
+      onSignup(account);
     }
 
     onSignInUsingGoogle = () => {
@@ -55,7 +65,9 @@ class Login extends Component {
     }
 
     render() {
-      const { txtUsername, txtPassword } = this.state;
+      const {
+        txtUsername, txtPassword, txtRePassword, txtEmail,
+      } = this.state;
       return (
         <div className="container ">
           <div className="row">
@@ -64,26 +76,35 @@ class Login extends Component {
                 <div className="myform form ">
                   <div className="logo mb-3">
                     <div className="col-md-12 text-center">
-                      <h1>Login</h1>
+                      <h1>Sign up</h1>
                     </div>
                   </div>
                   <form onSubmit={this.onSave}>
                     <div className="form-group">
                       <label>Username:</label>
-                      <input type="text" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter Username" onChange={this.onChange} />
+                      <input type="text" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter your name" onChange={this.onChange} />
                     </div>
                     <div className="form-group">
-                      <label>Password</label>
+                      <label>Email:</label>
+                      <input type="email" name="txtEmail" className="form-control" value={txtEmail} placeholder="Enter email" onChange={this.onChange} />
+                    </div>
+                    <div className="form-group">
+                      <label>Password:</label>
                       <input type="password" name="txtPassword" className="form-control" value={txtPassword} placeholder="Enter Password" onChange={this.onChange} />
+                    </div>
+                    <div className="form-group">
+                      <label>Re-password:</label>
+                      <input type="password" name="txtRePassword" className="form-control" value={txtRePassword} placeholder="Enter Re-Password" onChange={this.onChange} />
                     </div>
                     <div className="form-group">
                       <p className="text-center">
                         By signing up you accept our
+                        {' '}
                         <a>Terms Of Use</a>
                       </p>
                     </div>
                     <div className="col-md-12 text-center ">
-                      <button type="submit" className=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                      <button type="submit" className=" btn btn-block mybtn btn-primary tx-tfm">Sign up</button>
                     </div>
                     <div className="col-md-12 ">
                       <div className="login-or">
@@ -102,21 +123,19 @@ class Login extends Component {
                     </div>
                     <div className="form-group">
                       <p className="text-center">
-                        Don't have account?
-                        <Link to="/sign-up" id="signup"> Sign up here</Link>
+                        You have account?
+                        {' '}
+                        <Link to="/login" id="signup"> Sign-in here</Link>
                       </p>
                     </div>
                   </form>
-
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-
       );
     }
 }
 
-export default Login;
+export default SignUp;

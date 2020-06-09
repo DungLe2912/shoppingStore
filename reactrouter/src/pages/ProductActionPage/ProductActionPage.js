@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable no-shadow */
 /* eslint-disable react/no-unused-state */

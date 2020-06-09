@@ -1,13 +1,17 @@
+/* eslint-disable react/no-deprecated */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-shadow */
+/* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as firebase from 'firebase/app';
-import * as actions from '../../actions/products';
+import * as actions from '../../actions/auth';
 import SignUp from '../../components/SignUp/SignUp';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
-import * as errorMessages from '../../constants/ErrorMessageHandle';
-import * as typeErrors from '../../constants/ErrorType';
+import * as errMessage from '../../constants/ErrorMessageHandle';
+import errorCode from '../../constants/errCode';
 import NotifiModal from '../../components/NotifiModal/NotifiModal';
 import LoadingScreen from '../../components/Loading/LoadingScreen';
 
@@ -34,6 +38,39 @@ class SignupPage extends Component {
     };
   }
 
+  // eslint-disable-next-line react/no-deprecated
+  componentWillMount() {
+  // eslint-disable-next-line react/prop-types
+    const { history } = this.props;
+    const user = JSON.parse(localStorage.getItem('USER'));
+    if (user !== null) {
+    // eslint-disable-next-line react/prop-types
+      history.goBack();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      if (nextProps.dataSignUp.err === errorCode.ECONNREFUSED) {
+        this.setState({
+          isLoading: false,
+          isError: true,
+          errorMessage: errMessage.ECONNREFUSED,
+        });
+      } else if (nextProps.dataSignUp.data.errCode === errorCode.REGISTERED_FAILED) {
+        this.setState({
+          isError: true,
+          errorMessage: nextProps.dataSignUp.data.message,
+          isLoading: false,
+        });
+      } else {
+        this.setState({
+          isSignup: true,
+        });
+      }
+    }
+  }
+
     // eslint-disable-next-line react/sort-comp
     onLoading = () => {
       this.setState({
@@ -42,68 +79,18 @@ class SignupPage extends Component {
       // console.log('loading');
     }
 
-    // eslint-disable-next-line react/no-deprecated
-    componentWillMount() {
-      // eslint-disable-next-line react/prop-types
-      const { history } = this.props;
-      const user = JSON.parse(localStorage.getItem('USER'));
-      if (user !== null) {
-        // eslint-disable-next-line react/prop-types
-        history.goBack();
-      }
-    }
 
     onSignup = async (account) => {
+      await this.onLoading();
       if (account.password !== account.repassword) {
         this.setState({
           isError: true,
-          errorMessage: errorMessages.REPASSWORD_NOT_SAME,
+          errorMessage: errMessage.REPASSWORD_NOT_SAME,
+          isLoading: false,
         });
       } else {
-        await this.onLoading();
-        // await firebaseApp.auth().createUserWithEmailAndPassword(account.username, account.password)
-        //   .catch((error) => {
-        //     let errorMessage = error.message;
-        //     const errorCode = error.code;
-        //     switch (errorCode) {
-        //       case typeErrors.WEAK_PASSWORD:
-        //         errorMessage = errorMessages.WEAK_PASSWORD;
-        //         break;
-        //       case typeErrors.EMAIL_ALREADY_IN_USE:
-        //         errorMessage = errorMessages.EMAIL_ALREADY_IN_USE;
-        //         break;
-        //       case typeErrors.NETWORK_REQUEST_FAILED:
-        //         errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
-        //         break;
-        //       case typeErrors.INVALID_EMAIL:
-        //         errorMessage = errorMessages.INVALID_EMAIL;
-        //         break;
-        //       default:
-        //         break;
-        //     }
-        //     this.setState({
-        //       isError: true,
-        //       errorMessage,
-        //       isLoading: false,
-        //     });
-        //   });
-        
-        const { isError } = this.state;
-        if (isError === false) {
-          const user = firebase.auth().currentUser;
-          await user.updateProfile({
-            displayName: account.name,
-          }).then(() => {
-            this.setState({
-              isSignup: true,
-              isLoading: false,
-            }, () => {
-            });
-          }).catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log(error);
-          });
-        }
+        const { SignUp } = this.props;
+        await SignUp(account);
       }
     }
 
@@ -149,7 +136,7 @@ class SignupPage extends Component {
       } = this.state;
       if (isSignup === true) {
         return (
-          <Redirect to="/login" />
+          <Redirect to="/verify" />
         );
       }
       if (isSignupGoogle === true) {
@@ -181,11 +168,13 @@ class SignupPage extends Component {
       );
     }
 }
-const mapStateToProps = () => ({
-
+const mapStateToProps = (state) => ({
+  dataSignUp: state.SignUp,
 });
 const mapDispatchToProps = (dispatch) => ({
-  
+  SignUp: (account) => {
+    dispatch(actions.signUpRequest(account));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);

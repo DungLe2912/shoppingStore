@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/jsx-fragments */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-shadow */

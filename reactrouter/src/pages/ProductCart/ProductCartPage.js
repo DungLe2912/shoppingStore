@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/sort-comp */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/sort-comp */
 /* eslint-disable react/no-access-state-in-setstate */

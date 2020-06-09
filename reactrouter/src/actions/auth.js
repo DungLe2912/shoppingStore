@@ -22,15 +22,15 @@ export const signInRequest = (account) => (dispatch) => callAPI(`${signin}`, 'PO
   });
 
 export const SignUp = (status, data, err) => ({
-  type: types.SIGN_IN,
-  err,
-  data,
+  type: types.SIGN_UP,
   status,
+  data,
+  err,
 });
 export const signUpRequest = (account) => (dispatch) => callAPI(`${register}`, 'POST', defaultHeader, account)
   .then((res) => {
     if (res.err === errorCode.ECONNREFUSED) {
-      dispatch(SignUp(null, errorCode.ECONNREFUSED));
+      dispatch(SignUp(null, null, errorCode.ECONNREFUSED));
     } else {
       dispatch(SignUp(res.status, res.data, null));
     }

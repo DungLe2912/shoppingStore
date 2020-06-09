@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-shadow */
 /* eslint-disable react/sort-comp */
@@ -96,7 +97,7 @@ class Menu extends Component {
         result = menus.map((menu, index) => (
           <MenuLink
             key={index}
-            label={(isUpdated === true && menu.name === 'Đăng nhập' && user !== null) ? `Xin chào ${user.dataUser.firstname} ${user.dataUser.lastname} (Đăng xuất)` : menu.name}
+            label={(isUpdated === true && menu.name === 'Đăng nhập' && user !== null) ? `Xin chào ${user.dataUser.username} (Đăng xuất)` : menu.name}
             to={(isUpdated === true && menu.name === 'Đăng nhập') ? '/logout' : menu.to}
             activeOnlyWhenExact={menu.exact}
           />

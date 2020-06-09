@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable quote-props */
 /* eslint-disable react/no-deprecated */
 /* eslint-disable react/jsx-closing-tag-location */
@@ -70,12 +71,12 @@ class LoginPage extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.dataUser) {
-      return true;
-    }
-    return false;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   if (nextProps.dataUser) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   onGetInforUser = (token) => {
     const { GetInforUser } = this.props;

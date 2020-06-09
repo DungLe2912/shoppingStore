@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import HomePage from '../pages/HomePage/HomePage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
@@ -7,6 +9,7 @@ import ProductCartPage from '../pages/ProductCart/ProductCartPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import LogoutPage from '../pages/Logout/LogoutPage';
 import SignupPage from '../pages/SignupPage/SignupPage';
+import VerifyPage from '../pages/VerifyPage/VerifyPage';
 
 const routes = [
   {
@@ -27,13 +30,11 @@ const routes = [
   {
     path: '/product/add',
     exact: false,
-    // eslint-disable-next-line react/prop-types
     main: ({ history }) => <ProductActionPage history={history} />,
   },
   {
     path: '/product/:id/edit',
     exact: false,
-    // eslint-disable-next-line react/prop-types
     main: ({ match, history }) => <ProductActionPage match={match} history={history} />,
   },
   {
@@ -44,14 +45,17 @@ const routes = [
   {
     path: '/logout',
     exact: false,
-    // eslint-disable-next-line react/prop-types
     main: ({ history }) => <LogoutPage history={history} />,
   },
   {
     path: '/sign-up',
     exact: false,
-    // eslint-disable-next-line react/prop-types
     main: ({ history }) => <SignupPage history={history} />,
+  },
+  {
+    path: '/verify',
+    exact: false,
+    main: ({ history }) => <VerifyPage history={history} />,
   },
   {
     path: '',
