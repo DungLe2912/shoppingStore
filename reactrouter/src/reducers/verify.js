@@ -1,15 +1,15 @@
 /* eslint-disable no-param-reassign */
 import * as types from '../constants/ActionTypes';
 
-const initialState = null;
+const initialState = {};
 
-const SignUp = (state = initialState, action) => {
+const Verify = (state = initialState, action) => {
   switch (action.type) {
-    case types.SIGN_UP:
+    case types.VERIFY_CODE:
       state = action;
       return state;
     default:
       return state;
   }
 };
-export default SignUp;
+export default Verify;

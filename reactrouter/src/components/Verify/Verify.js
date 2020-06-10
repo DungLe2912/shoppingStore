@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
@@ -26,12 +27,13 @@ class Verify extends Component {
     this.onVerify(code);
   }
 
-  onVerify = (account) => {
+  onVerify = (code) => {
     const { onVerify } = this.props;
-    onVerify(account);
+    onVerify(code);
   }
 
   render() {
+    const { txtCode } = this.state;
     return (
       <div className="container ">
         <div className="row">
@@ -46,7 +48,10 @@ class Verify extends Component {
                 <form onSubmit={this.onSave}>
                   <div className="form-group">
                     <label>Enter code:</label>
-                    <input type="text" name="txtUsername" className="form-control" value={txtCode} placeholder="Enter your name" onChange={this.onChange} />
+                    <input type="text" name="txtCode" className="form-control" value={txtCode} placeholder="Enter your name" onChange={this.onChange} />
+                  </div>
+                  <div className="col-md-12 text-center ">
+                    <button type="submit" className=" btn btn-block mybtn btn-primary tx-tfm">Verify</button>
                   </div>
                 </form>
               </div>

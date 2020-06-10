@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/no-unused-state */
+/* eslint-disable react/no-deprecated */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prefer-stateless-function */
@@ -9,6 +12,8 @@ import LoadingScreen from '../../components/Loading/LoadingScreen';
 import Verify from '../../components/Verify/Verify';
 import NotifiModal from '../../components/NotifiModal/NotifiModal';
 import * as errMessage from '../../constants/ErrorMessageHandle';
+import errorCode from '../../constants/errCode';
+
 
 class VerifyPage extends Component {
   constructor(props, context) {
@@ -17,14 +22,37 @@ class VerifyPage extends Component {
       isLoading: false,
       isError: false,
       errorMessage: '',
+      isVerify: false,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps) {
+      if (nextProps.dataVerify.err === errorCode.ECONNREFUSED) {
+        this.setState({
+          isLoading: false,
+          isError: true,
+          errorMessage: errMessage.ECONNREFUSED,
+        });
+      } else if (nextProps.dataVerify.data.errCode === errorCode.VERIFY_FAILED) {
+        this.setState({
+          isError: true,
+          errorMessage: nextProps.dataVerify.data.message,
+          isLoading: false,
+        });
+      } else {
+        this.setState({
+          isVerify: true,
+          isLoading: false,
+        });
+      }
+    }
   }
 
   onLoading = () => {
     this.setState({
       isLoading: true,
     });
-    // console.log('loading');
   }
 
   onClose = () => {
@@ -37,24 +65,26 @@ class VerifyPage extends Component {
 
   onVerify = async (code) => {
     const { dataSignUp } = this.props;
+    const { VerifyRequest } = this.props;
     await this.onLoading();
-    if (code !== dataSignUp.data.username) {
-      this.setState({
-        isError: true,
-        errorMessage: errMessage.REPASSWORD_NOT_SAME,
-        isLoading: false,
-      });
-    } else {
-      const { SignUp } = this.props;
-      await SignUp(account);
-    }
+    const data = {
+      code,
+      username: dataSignUp.data.accountData,
+    };
+    await VerifyRequest(data);
   }
 
+
   render() {
-    const { isLoading, isError, errorMessage } = this.state;
-    const { history, dataSignUp } = this.props;
-    if (!dataSignUp) {
-      history.goBack();
+    const {
+      isLoading, isError, errorMessage, isVerify,
+    } = this.state;
+    const { dataSignUp } = this.props;
+    if (dataSignUp === null && isVerify === false) {
+      return <Redirect to="/" />;
+    }
+    if (isVerify === true) {
+      return <Redirect to="/login" />;
     }
     return (
       <>
@@ -63,7 +93,7 @@ class VerifyPage extends Component {
         )
           : (
             <>
-              <Verify />
+              <Verify onVerify={this.onVerify} />
               <NotifiModal
                 isOpen={isError}
                 errorMessage={errorMessage}
@@ -77,9 +107,12 @@ class VerifyPage extends Component {
 }
 const mapStateToProps = (state) => ({
   dataSignUp: state.SignUp,
+  dataVerify: state.Verify,
 });
 const mapDispatchToProps = (dispatch) => ({
-  
+  VerifyRequest: (data) => {
+    dispatch(actions.VerifyRequest(data));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyPage);

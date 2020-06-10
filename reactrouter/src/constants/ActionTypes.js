@@ -20,4 +20,3 @@ export const SIGN_IN = 'SIGN_IN';
 export const GET_INFOR = 'GET_INFOR';
 export const SIGN_UP = 'SIGN_UP';
 export const VERIFY_CODE = 'VERIFY_CODE';
-export const ACTIVATE_ACCOUNT = 'ACTIVATE_ACCOUNT';

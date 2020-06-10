@@ -63,6 +63,12 @@ class SignupPage extends Component {
           errorMessage: nextProps.dataSignUp.data.message,
           isLoading: false,
         });
+      } else if (nextProps.dataSignUp.data.errCode === errorCode.SEND_CODE_FAILED) {
+        this.setState({
+          isError: true,
+          errorMessage: nextProps.dataSignUp.data.message,
+          isLoading: false,
+        });
       } else {
         this.setState({
           isSignup: true,

@@ -55,21 +55,6 @@ export const VerifyRequest = (data) => (dispatch) => callAPI(`${verify}`, 'POST'
   }).catch(() => {
     //  dispatch(handleError(error));
   });
-export const ActivateAccount = (status, data, err) => ({
-  type: types.VERIFY_CODE,
-  status,
-  err,
-});
-export const ActivateAccountRequest = (username) => (dispatch) => callAPI(`${activate}`, 'PUT', defaultHeader, username)
-  .then((res) => {
-    if (res.err === errorCode.ECONNREFUSED) {
-      dispatch(ActivateAccount(null, errorCode.ECONNREFUSED));
-    } else {
-      dispatch(ActivateAccount(res.status, null));
-    }
-  }).catch(() => {
-    //  dispatch(handleError(error));
-  });
 export const getInfor = (status, data) => ({
   type: types.GET_INFOR,
   status,

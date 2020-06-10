@@ -1,3 +1,4 @@
+/* eslint-disable react/no-deprecated */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/sort-comp */
 import React, { Component } from 'react';
@@ -16,7 +17,7 @@ class ProductCartPage extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     // eslint-disable-next-line react/prop-types
     const { products, fetchProductRequest } = this.props;
     this.setState({
