@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import './App.css';
 import React, { Component } from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';

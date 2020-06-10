@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -103,7 +104,7 @@ class Login extends Component {
                     <div className="form-group">
                       <p className="text-center">
                         Don't have account?
-                        <Link to="/sign-up" id="signup">Sign up here</Link>
+                        <Link to="/sign-up" id="signup"> Sign up here</Link>
                       </p>
                     </div>
                   </form>

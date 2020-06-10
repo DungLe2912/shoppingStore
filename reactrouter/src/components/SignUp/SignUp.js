@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -11,7 +12,7 @@ class SignUp extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      txtName: '',
+      txtEmail: '',
       txtUsername: '',
       txtPassword: '',
       txtRePassword: '',
@@ -21,7 +22,7 @@ class SignUp extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.isError === false) {
       this.setState({
-        txtName: '',
+        txtEmail: '',
         txtUsername: '',
         txtPassword: '',
         txtRePassword: '',
@@ -40,15 +41,15 @@ class SignUp extends Component {
 
     onSave = (e) => {
       const {
-        txtName, txtUsername, txtPassword, txtRePassword,
+        txtEmail, txtUsername, txtPassword, txtRePassword,
       } = this.state;
       e.preventDefault();
-      const name = txtName;
+      const email = txtEmail;
       const username = txtUsername;
       const password = txtPassword;
       const repassword = txtRePassword;
       const account = {
-        name, username, password, repassword,
+        email, username, password, repassword,
       };
       this.onSignup(account);
     }
@@ -65,7 +66,7 @@ class SignUp extends Component {
 
     render() {
       const {
-        txtUsername, txtPassword, txtRePassword, txtName,
+        txtUsername, txtPassword, txtRePassword, txtEmail,
       } = this.state;
       return (
         <div className="container ">
@@ -80,12 +81,12 @@ class SignUp extends Component {
                   </div>
                   <form onSubmit={this.onSave}>
                     <div className="form-group">
-                      <label>Name:</label>
-                      <input type="text" name="txtName" className="form-control" value={txtName} placeholder="Enter your name" onChange={this.onChange} />
+                      <label>Username:</label>
+                      <input type="text" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter your name" onChange={this.onChange} />
                     </div>
                     <div className="form-group">
                       <label>Email:</label>
-                      <input type="email" name="txtUsername" className="form-control" value={txtUsername} placeholder="Enter email" onChange={this.onChange} />
+                      <input type="email" name="txtEmail" className="form-control" value={txtEmail} placeholder="Enter email" onChange={this.onChange} />
                     </div>
                     <div className="form-group">
                       <label>Password:</label>
@@ -124,7 +125,7 @@ class SignUp extends Component {
                       <p className="text-center">
                         You have account?
                         {' '}
-                        <Link to="/login" id="signup">Sign-in here</Link>
+                        <Link to="/login" id="signup"> Sign-in here</Link>
                       </p>
                     </div>
                   </form>
