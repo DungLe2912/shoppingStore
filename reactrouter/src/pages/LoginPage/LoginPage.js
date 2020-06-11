@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as firebase from 'firebase/app';
+import { toast } from 'react-toastify';
 import Login from '../../components/Login/Login';
 import * as actions from '../../actions/auth';
 import 'firebase/auth';
@@ -19,7 +20,9 @@ import NotifiModal from '../../components/NotifiModal/NotifiModal';
 import { defaultHeader } from '../../constants/Config';
 import errorCode from '../../constants/errCode';
 import * as errMessage from '../../constants/ErrorMessageHandle';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure();
 let firebaseApp = firebase;
 if (!firebase.apps.length) {
   firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -47,6 +50,14 @@ class LoginPage extends Component {
     };
   }
 
+  componentWillMount() {
+    const { dataVerify } = this.props;
+    if (dataVerify !== null) {
+      if (dataVerify.data.success === true) {
+        this.notify();
+      }
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps) {
@@ -71,12 +82,9 @@ class LoginPage extends Component {
     }
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   if (nextProps.dataUser) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  notify =() => {
+    toast.success('Xác thực thành công');
+  }
 
   onGetInforUser = (token) => {
     const { GetInforUser } = this.props;
@@ -114,49 +122,6 @@ class LoginPage extends Component {
       }
     }
 
-    // onLogin = async (account) => {
-    //   const { Login } = this.props;
-    //   await this.onLoading();
-    //   await firebaseApp.auth().signInWithEmailAndPassword(account.username, account.password)
-    //     .catch((error) => {
-    //       // Handle Errors here.
-    //       let errorMessage = error.message;
-    //       const errorCode = error.code;
-    //       switch (errorCode) {
-    //         case typeErrors.USER_DISABLE:
-    //           errorMessage = errorMessages.USER_DISABLE;
-    //           break;
-    //         case typeErrors.USER_NOT_FOUND:
-    //           errorMessage = errorMessages.USER_NOT_FOUND;
-    //           break;
-    //         case typeErrors.NETWORK_REQUEST_FAILED:
-    //           errorMessage = errorMessages.NETWORK_REQUEST_FAILED;
-    //           break;
-    //         case typeErrors.WRONG_PASSWORD:
-    //           errorMessage = errorMessages.WRONG_PASSWORD;
-    //           break;
-    //         case typeErrors.INVALID_EMAIL:
-    //           errorMessage = errorMessages.INVALID_EMAIL;
-    //           break;
-    //         default:
-    //           break;
-    //       }
-    //       this.setState({
-    //         isError: true,
-    //         errorMessage,
-    //         isLoading: false,
-    //       });
-    //     });
-    //   const { isError } = this.state;
-    //   if (isError === false) {
-    //     const user = firebase.auth().currentUser;
-    //     const account = { username: user.displayName, email: user.email };
-    //     await Login(account);
-    //     this.setState({
-    //       isLoading: false,
-    //     });
-    //   }
-    // }
     onLogin = async (account) => {
       const { Login } = this.props;
       await this.onLoading();
@@ -195,6 +160,7 @@ class LoginPage extends Component {
                 errorMessage={errorMessage}
                 onClose={this.onClose}
               />
+
             </React.Fragment> }
 
         </React.Fragment>
@@ -204,6 +170,7 @@ class LoginPage extends Component {
 const mapStateToProps = (state) => ({
   dataLogin: state.Login,
   dataUser: state.InforUser,
+  dataVerify: state.Verify,
 });
 const mapDispatchToProps = (dispatch) => ({
   Login: (account) => {

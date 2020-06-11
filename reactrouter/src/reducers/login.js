@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as types from '../constants/ActionTypes';
 
-const initialState = {};
+const initialState = null;
 
 const Login = (state = initialState, action) => {
   switch (action.type) {
