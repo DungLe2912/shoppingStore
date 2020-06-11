@@ -7,14 +7,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as actions from '../../actions/auth';
 import LoadingScreen from '../../components/Loading/LoadingScreen';
 import Verify from '../../components/Verify/Verify';
 import NotifiModal from '../../components/NotifiModal/NotifiModal';
 import * as errMessage from '../../constants/ErrorMessageHandle';
 import errorCode from '../../constants/errCode';
+import 'react-toastify/dist/ReactToastify.css';
 
-
+toast.configure();
 class VerifyPage extends Component {
   constructor(props, context) {
     super(props, context);
@@ -24,6 +26,15 @@ class VerifyPage extends Component {
       errorMessage: '',
       isVerify: false,
     };
+  }
+
+  componentWillMount() {
+    const { dataSignUp } = this.props;
+    if (dataSignUp !== null) {
+      if (dataSignUp.data.success === true) {
+        this.notify();
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,6 +58,10 @@ class VerifyPage extends Component {
         });
       }
     }
+  }
+
+  notify =() => {
+    toast.info('Đã gửi mã xác thực đến email của bạn');
   }
 
   onLoading = () => {
